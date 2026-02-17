@@ -1,0 +1,42 @@
+.urlInputContainer {
+    border: .12rem solid #d3830b;
+    border-radius: .1rem;
+    width: 50vw;
+    font-family: var(--font-inconsolata);
+}
+
+.urlInputForm {
+    width: 100%;
+}
+
+.urlInput,
+.urlInputButton {
+    padding: .1rem;
+}
+
+.urlInput {
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    width: 70%;
+    padding: 0 .5rem;
+}
+
+.urlInputButton {
+    border: none;
+    outline: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    letter-spacing: .02rem;
+    width: 30%;
+    background-color: transparent;
+    border-left: .01rem double #d3830b;
+    color: #d3830b;
+}
+
+.urlInputButton:hover {
+    background-color: #d3830b;
+    box-shadow: .2rem .2rem .2rem .2rem #d3830b;
+    color: #ffffff;
+    transition: .4s;
+}
