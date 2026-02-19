@@ -15,6 +15,5 @@ app = FastAPI(docs_url="/api/py/docs")
 
 @app.get("/api/py/show-url-list")
 async def read_category_by_query():
-    url_to_return = None
     for url in URL_LIST:
         return url
