@@ -1,0 +1,59 @@
+.urlListOuter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.urlListTitle {
+    font-size: 2rem;
+    font-family: var(--font-duru-sans);
+    padding: .5rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    text-decoration: underline;
+    text-underline-offset: .4rem;
+}
+
+.urlTable {
+    padding: .5rem;
+}
+
+.urlListInner {
+    width: 100%;
+}
+
+.urlTable {
+    width: 100%;
+}
+
+.tableHeader>tr>th {
+    padding-bottom: .2rem;
+    text-decoration: underline;
+    text-underline-offset: .2rem;
+}
+
+.tableHeader>tr>th:nth-child(odd) {
+    float: left;
+    padding-left: 5rem;
+}
+
+.tableRow {
+    border: .1rem solid #d3830b;
+}
+
+.tableRow>td {
+    text-decoration: underline;
+    padding-top: .2rem;
+    padding-bottom: .2rem;
+}
+
+.tableRow>td:nth-child(even) {
+    background-color: #d3830b;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.tableRow>td:nth-child(odd) {
+    padding-left: .6rem;
+}

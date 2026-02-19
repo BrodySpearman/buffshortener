@@ -36,7 +36,7 @@
 
 .urlInputButton:hover {
     background-color: #d3830b;
-    box-shadow: .2rem .2rem .2rem .2rem #d3830b;
+    box-shadow: .05rem .05rem .05rem .05rem #d3830b;
     color: #ffffff;
     transition: .4s;
 }
