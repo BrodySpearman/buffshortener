@@ -1,5 +1,8 @@
 import type { NextConfig } from "next";
 
+// Documentation:
+//http://localhost:8000/api/py/docs
+
 const nextConfig: NextConfig = {
   rewrites: async () => {
     return [
