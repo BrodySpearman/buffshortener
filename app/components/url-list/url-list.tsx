@@ -2,7 +2,7 @@ import styles from './url-list.module.css';
 
 export default async function URLList() {
 
-    const url: { inputUrl: string | null, shortUrl: string | null } = await fetchUrlList();
+    const url: { inputUrl: string | null, shortUrl: string | null }[] = await fetchUrlList();
 
     if (!url) {
         return (
@@ -26,10 +26,12 @@ export default async function URLList() {
                         </tr>
                     </thead>
                     <tbody className={styles.tableBody}>
-                        <tr className={styles.tableRow}>
-                            <td>{url.inputUrl}</td>
-                            <td>{url.shortUrl}</td>
-                        </tr>
+                        {url && url.map((url, index) => (
+                            <tr key={index} className={styles.tableRow}>
+                                <td><a href={url.inputUrl || ''} target="_blank" rel="noopener noreferrer">{url.inputUrl || ''}</a></td>
+                                <td><a href={url.shortUrl || ''} target="_blank" rel="noopener noreferrer">{url.shortUrl || ''}</a></td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -51,9 +53,9 @@ async function fetchUrlList() {
         if (!response.ok) {
             throw new Error("Failed to fetch data");
         }
-        const url = await response.json();
-        console.log(url);
-        return url;
+        const urlList = await response.json();
+        console.log(urlList);
+        return urlList;
 
     } catch (error) {
         console.error("Error fetching url list:", error);
