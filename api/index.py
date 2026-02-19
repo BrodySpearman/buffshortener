@@ -11,15 +11,6 @@ URL_LIST = [
     {'inputUrl': 'https://www.openai.com', 'shortUrl': 'buff.ly/123456'},
 ]
 
-ENGINEER_ROLES = [
-    {'title': 'Frontend Developer', 'mainskill': 'React'},
-    {'title': 'Backend Developer', 'mainskill': 'Node.js'},
-    {'title': 'Fullstack Developer', 'mainskill': 'Next.js'},
-    {'title': 'Machine Learning Engineer', 'mainskill': 'Tensorflow'},
-    {'title': 'Data Scientist', 'mainskill': 'Apache Spark'},
-    {'title': 'Software Architect', 'mainskill': 'System Analysis'},
-]
-
 app = FastAPI(docs_url="/api/py/docs")
 
 @app.get("/api/py/show-url-list")
