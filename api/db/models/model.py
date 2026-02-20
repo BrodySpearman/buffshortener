@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class URLPost(BaseModel):
     inputUrl: str
@@ -6,3 +7,8 @@ class URLPost(BaseModel):
 class URLGet(BaseModel):
     inputUrl: str
     shortUrl: str
+
+class db_url(BaseModel):
+    longUrl: str
+    shortUrl: str
+    createdAt: datetime
