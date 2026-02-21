@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from api.features.shortenUrl import generate_new_url
 from api.db.models.model import db_url, URLPost, URLListRecord
 from datetime import datetime
+from api.db.connect import app
 
 # Helpful developer tools
 # uvicorn api.index:app --reload ->
