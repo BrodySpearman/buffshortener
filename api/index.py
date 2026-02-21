@@ -1,32 +1,65 @@
-from fastapi import FastAPI
-from api.db.connect import create_db_client
+from api.db.connect import app, create_db_client, close_db_client
 from pydantic import BaseModel
+from api.features.shortenUrl import generate_new_url
+from api.db.models.model import db_url, URLPost, URLListRecord
+from datetime import datetime
 
 # Helpful developer tools
 # uvicorn api.index:app --reload ->
 # http://localhost:8000/api/docs -- API documentation
-
-class URLList(BaseModel):
-    inputUrl: str
-    shortUrl: str
-
-class URLPost(BaseModel):
-    inputUrl: str
-
-URL_LIST = [
-    URLList(inputUrl='https://www.youtube.com', shortUrl='buff.ly/123456'),
-    URLList(inputUrl='https://www.google.com', shortUrl='buff.ly/123456'),
-    URLList(inputUrl='https://www.openai.com', shortUrl='buff.ly/123456'),
-]
-
-app = FastAPI(docs_url="/api/py/docs")
+# Database models are stored in api/db/models/model.py
 
 @app.get("/api/py/show-url-list")
-async def read_category_by_query():
-    print("URL List:", URL_LIST)
-    return URL_LIST
+async def show_url_list():
+    """
+        Fetches all past input URLs and corrosponding aliases.
+        URL_LIST: object[]
+        {
+            "inputUrl": "https://www.youtube.com",
+            "shortUrl": "buff.ly/123456"
+        }
+    """
+    await create_db_client(app)
+    url_list = []
+    async for url in app.collection.find({}).limit(10): 
+        url_list.append(URLListRecord(inputUrl=url['longUrl'], shortUrl=url['shortUrl']))
+
+    print("URL List:", url_list)
+
+    return url_list
+   
 
 @app.post("/api/py/submit-url")
 async def submit_url(url: URLPost):
-    print(f"Input URL: {url.inputUrl}")
-    return {'message': 'URL submitted successfully'}
+    """
+        Submits a new URL to the database.
+        URLPost: object
+        {
+            "inputUrl": "https://www.youtube.com"
+        }
+    """
+    inputUrl = url.inputUrl
+    await create_db_client(app)
+
+    # This model creation may be redundant? not sure.    
+    new_db_url = db_url(
+        longUrl=inputUrl,
+        shortUrl=generate_new_url(inputUrl),
+        createdAt=datetime.now(),
+    )
+
+    await app.collection.insert_one({
+        "longUrl": new_db_url.longUrl,
+        "shortUrl": new_db_url.shortUrl,
+        "createdAt": new_db_url.createdAt,
+    })
+
+    print("New Entry: (")
+    print(f"Short URL: {new_db_url.shortUrl}")
+    print(f"Input URL: {new_db_url.longUrl}")
+    print(f"creation Date: {new_db_url.createdAt}")
+    print(")")
+
+    await show_url_list()
+    return {'message': 'URL submitted successfully', 'shortUrl': new_db_url.shortUrl}
+    
