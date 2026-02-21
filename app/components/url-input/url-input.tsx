@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import styles from './url-input.module.css';
 import Form from 'next/form';
+import { refresh } from 'next/cache';
 
 export default function URLInput() {
 
@@ -36,4 +37,5 @@ async function submitVal(formData: FormData) {
 
     const data = await response.json();
     console.log(data);
+    refresh();
 }

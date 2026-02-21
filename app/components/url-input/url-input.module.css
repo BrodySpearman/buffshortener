@@ -3,6 +3,7 @@
     border-radius: .1rem;
     width: 50vw;
     font-family: var(--font-inconsolata);
+    background-color: #0f0f0f;
 }
 
 .urlInputForm {

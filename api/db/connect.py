@@ -12,8 +12,13 @@ async def lifespan(app: FastAPI):
     await close_db_client(app)
 
 async def create_db_client(app):
+
+    
     load_dotenv()
     uri = os.getenv("MONGODB_URI")
+
+    if(not uri):
+        uri = os.environ.get("MONGODB_URI")
 
     # Client Creation
     app.client = AsyncMongoClient(uri, server_api=ServerApi(version="1", deprecation_errors=True))

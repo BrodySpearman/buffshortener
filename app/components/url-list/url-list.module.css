@@ -57,4 +57,5 @@
 
 .tableRow>td:nth-child(odd) {
     padding-left: .6rem;
+    background-color: #0f0f0f;
 }
