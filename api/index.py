@@ -60,6 +60,5 @@ async def submit_url(url: URLPost):
     print(f"creation Date: {new_db_url.createdAt}")
     print(")")
 
-    await show_url_list()
     return {'message': 'URL submitted successfully', 'shortUrl': new_db_url.shortUrl}
     
