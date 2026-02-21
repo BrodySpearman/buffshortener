@@ -45,3 +45,5 @@ __pycache__
 *.pyc
 .env
 
+api/__pycache__/index.cpython-313.pyc
+*.pyc
