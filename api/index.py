@@ -10,6 +10,8 @@ from api.db.connect import app
 # http://localhost:8000/api/docs -- API documentation
 # Database models are stored in api/db/models/model.py
 
+app=app
+
 @app.get("/api/py/show-url-list")
 async def show_url_list():
     """
