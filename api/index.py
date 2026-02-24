@@ -41,8 +41,7 @@ async def submit_url(url: URLPost):
     """
     inputUrl = url.inputUrl
     await create_db_client(app)
-
-    # This model creation may be redundant? not sure.    
+    
     new_db_url = db_url(
         longUrl=inputUrl,
         shortUrl=generate_new_url(inputUrl),

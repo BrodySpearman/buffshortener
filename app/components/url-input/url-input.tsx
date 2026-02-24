@@ -16,11 +16,10 @@ export default function URLInput() {
 }
 
 async function submitVal(formData: FormData) {
-    'use server';
 
     let baseUrl = 'https://buffshortener.vercel.app';
     if (process.env.NODE_ENV === 'development') {
-        baseUrl = 'http://localhost:8000';
+        baseUrl = 'http://localhost:3000';
     }
 
     const response = await fetch(`${baseUrl}/api/py/submit-url`, {
