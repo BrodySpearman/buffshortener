@@ -13,7 +13,6 @@ async def lifespan(app: FastAPI):
 
 async def create_db_client(app):
 
-    
     load_dotenv()
     uri = os.getenv("MONGODB_URI")
 
