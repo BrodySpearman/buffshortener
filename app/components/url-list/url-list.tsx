@@ -40,6 +40,7 @@ export default async function URLList() {
 };
 
 async function fetchUrlList() {
+
     let baseUrl = 'https://buffshortener.vercel.app';
     if (process.env.NODE_ENV === 'development') {
         baseUrl = 'http://localhost:3000';
@@ -57,7 +58,7 @@ async function fetchUrlList() {
         return urlList;
 
     } catch (error) {
-        console.error("Error fetching url list:", error);
+        console.error(error);
         return null;
     }
 }
