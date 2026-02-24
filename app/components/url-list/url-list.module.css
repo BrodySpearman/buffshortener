@@ -41,12 +41,32 @@
 
 .tableRow {
     border: .1rem solid #d3830b;
+    max-width: 70vw;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
 }
 
 .tableRow>td {
     text-decoration: underline;
     padding-top: .2rem;
     padding-bottom: .2rem;
+    max-width: 40vw;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tableRow>td::-webkit-scrollbar {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+}
+
+.tableRow>td::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+}
+
+.tableRow>td::-webkit-scrollbar-thumb {
+    background-color: #d3830b;
+    border-radius: .2rem;
 }
 
 .tableRow>td:nth-child(even) {
