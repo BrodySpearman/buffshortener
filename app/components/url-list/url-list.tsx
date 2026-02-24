@@ -40,7 +40,6 @@ export default async function URLList() {
 };
 
 async function fetchUrlList() {
-    'use server';
 
     let baseUrl = 'https://buffshortener.vercel.app';
     if (process.env.NODE_ENV === 'development') {
