@@ -22,19 +22,22 @@ async function submitVal(formData: FormData) {
         baseUrl = 'http://localhost:3000';
     }
 
-    const response = await fetch(`${baseUrl}/api/py/submit-url`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ inputUrl: formData.get('inputUrl') }),
-    });
+    try {
+        const response = await fetch(`${baseUrl}/api/submit-url`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ inputUrl: formData.get('inputUrl') }),
+        });
+        if (!response.ok) {
+            throw new Error("Failed to send data");
+        }
 
-    if (!response.ok) {
-        throw new Error("Failed to send data");
+        const data = await response.json();
+        console.log(data);
+        refresh();
+    } catch (error) {
+        console.error(error);
     }
-
-    const data = await response.json();
-    console.log(data);
-    refresh();
 }
