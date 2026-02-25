@@ -42,15 +42,15 @@ export default async function URLList() {
 async function fetchUrlList() {
     let baseUrl = 'https://buffshortener.vercel.app';
     if (process.env.NODE_ENV === 'development') {
-        baseUrl = 'http://localhost:3000';
+        baseUrl = 'http://localhost:8000';
     }
 
     try {
         const response = await fetch(
-            `${baseUrl}/api/py/show-url-list`
+            `${baseUrl}/api/show-url-list`
         );
         if (!response.ok) {
-            throw new Error(response.statusText);
+            throw new Error("Failed to fetch URL list");
         }
         const urlList = await response.json();
         console.log(urlList);

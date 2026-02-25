@@ -1,66 +1,41 @@
-from api.db.connect import app, create_db_client, close_db_client
-from pydantic import BaseModel
-from api.features.shortenUrl import generate_new_url
-from api.db.models.model import db_url, URLPost, URLListRecord
-from datetime import datetime
-from api.db.connect import app
+from pymongo.server_api import ServerApi
+from pymongo import AsyncMongoClient
+import os
+from dotenv import load_dotenv
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
 
-# Helpful developer tools
-# uvicorn api.index:app --reload ->
-# http://localhost:8000/api/docs -- API documentation
-# Database models are stored in api/db/models/model.py
-
-app=app
-
-@app.get("/api/py/show-url-list")
-async def show_url_list():
-    """
-        Fetches all past input URLs and corrosponding aliases.
-        URL_LIST: object[]
-        {
-            "inputUrl": "https://www.youtube.com",
-            "shortUrl": "buff.ly/123456"
-        }
-    """
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     await create_db_client(app)
-    url_list = []
-    async for url in app.collection.find({}).limit(10): 
-        url_list.append(URLListRecord(inputUrl=url['longUrl'], shortUrl=url['shortUrl']))
+    yield
+    await close_db_client(app)
 
-    print("URL List:", url_list)
+async def create_db_client(app):
 
-    return url_list
-   
+    load_dotenv()
+    uri = os.getenv("MONGODB_URI")
 
-@app.post("/api/py/submit-url")
-async def submit_url(url: URLPost):
-    """
-        Submits a new URL to the database.
-        URLPost: object
-        {
-            "inputUrl": "https://www.youtube.com"
-        }
-    """
-    inputUrl = url.inputUrl
-    await create_db_client(app)
-    
-    new_db_url = db_url(
-        longUrl=inputUrl,
-        shortUrl=generate_new_url(inputUrl),
-        createdAt=datetime.now(),
-    )
+    if(not uri):
+        uri = os.environ.get("MONGODB_URI")
 
-    await app.collection.insert_one({
-        "longUrl": new_db_url.longUrl,
-        "shortUrl": new_db_url.shortUrl,
-        "createdAt": new_db_url.createdAt,
-    })
+    # Client Creation
+    app.client = AsyncMongoClient(uri, server_api=ServerApi(version="1", deprecation_errors=True))
+    app.database = app.client.get_database("url_storage")
+    app.collection = app.database.get_collection("urls")
 
-    print("New Entry: (")
-    print(f"Short URL: {new_db_url.shortUrl}")
-    print(f"Input URL: {new_db_url.longUrl}")
-    print(f"creation Date: {new_db_url.createdAt}")
-    print(")")
+    try:
+        await app.database.command("ping")
+        print("Pinged your deployment. You successfully connected to MongoDB!")
 
-    return {'message': 'URL submitted successfully', 'shortUrl': new_db_url.shortUrl}
-    
+    except Exception as e:
+        print(e)
+
+async def close_db_client(app):
+    await app.client.close()
+    print("Closed MongoDB connection")
+
+app = FastAPI(docs_url="/api/docs", lifespan=lifespan)
+print('Initialized FastAPI')
+import api.routes
+
