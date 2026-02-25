@@ -1,5 +1,7 @@
 import styles from './url-list.module.css';
 
+export const dynamic = 'force-dynamic';
+
 export default async function URLList() {
 
     const url: { inputUrl: string | null, shortUrl: string | null }[] = await fetchUrlList();
