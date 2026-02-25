@@ -1,7 +1,7 @@
 from api.index import app, create_db_client, close_db_client
 from pydantic import BaseModel
 from api.features.shortenUrl import generate_new_url
-from api.db.models.model import db_url, URLPost, URLListRecord
+from api.db.models.model import db_url, URLPost, URLListRecord, URLDelete
 from datetime import datetime
 
 # Helpful developer tools
@@ -24,7 +24,7 @@ async def show_url_list():
     async for url in app.collection.find({}).limit(10): 
         url_list.append(URLListRecord(inputUrl=url['longUrl'], shortUrl=url['shortUrl']))
 
-    print("URL List:", url_list)
+    print("URL List Received")
 
     return url_list
    
@@ -60,4 +60,17 @@ async def submit_url(url: URLPost):
     print(")")
 
     return {'message': 'URL submitted successfully', 'shortUrl': new_db_url.shortUrl}
+
+@app.delete("/api/delete-url")
+async def delete_url(url: URLDelete):
+    """
+        Deletes a URL from the database.
+        URLPost: object
+        {
+            "shortUrl": "buff.ly/123456"
+        }
+    """
+    await create_db_client(app)
+    await app.collection.delete_one({ "shortUrl": url.shortUrl })
+    return {'message': 'URL deleted successfully'}
     

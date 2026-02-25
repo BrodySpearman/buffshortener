@@ -25,8 +25,7 @@ async def create_db_client(app):
     app.collection = app.database.get_collection("urls")
 
     try:
-        await app.database.command("ping")
-        print("Pinged your deployment. You successfully connected to MongoDB!")
+        print("Successfully connected to MongoDB!")
 
     except Exception as e:
         print(e)

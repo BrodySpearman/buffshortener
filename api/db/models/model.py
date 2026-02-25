@@ -4,6 +4,9 @@ from datetime import datetime
 class URLPost(BaseModel):
     inputUrl: str
 
+class URLDelete(BaseModel):
+    shortUrl: str
+
 class URLListRecord(BaseModel):
     inputUrl: str
     shortUrl: str
