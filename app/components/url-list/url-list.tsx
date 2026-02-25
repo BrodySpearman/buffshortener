@@ -1,4 +1,5 @@
 import styles from './url-list.module.css';
+import { refresh } from 'next/cache';
 
 export default async function URLList() {
 
@@ -19,6 +20,11 @@ export default async function URLList() {
             <h1 className={styles.urlListTitle}>URL List</h1>
             <div className={styles.urlListInner}>
                 <table className={styles.urlTable}>
+                    <colgroup>
+                        <col style={{ width: '75%' }} />
+                        <col style={{ width: '20%' }} />
+                        <col style={{ width: '5%' }} />
+                    </colgroup>
                     <thead className={styles.tableHeader}>
                         <tr>
                             <th>Input URL</th>
@@ -28,8 +34,13 @@ export default async function URLList() {
                     <tbody className={styles.tableBody}>
                         {url && url.map((url, index) => (
                             <tr key={index} className={styles.tableRow}>
-                                <td><a href={url.inputUrl || ''} target="_blank" rel="noopener noreferrer">{url.inputUrl || ''}</a></td>
+                                <td><a className={styles.inputUrl} href={url.inputUrl || ''} target="_blank" rel="noopener noreferrer">{url.inputUrl || ''}</a></td>
                                 <td><a href={url.shortUrl || ''} target="_blank" rel="noopener noreferrer">{url.shortUrl || ''}</a></td>
+                                <td>
+                                    <form action={deleteUrl}>
+                                        <button className={styles.deleteButton} name="shortUrl" value={url.shortUrl || ''} type="submit"> - </button>
+                                    </form>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -61,3 +72,36 @@ async function fetchUrlList() {
         return null;
     }
 }
+
+async function deleteUrl(formData: FormData) {
+    'use server';
+    let baseUrl = 'https://buffshortener.vercel.app';
+    if (process.env.NODE_ENV === 'development') {
+        baseUrl = 'http://localhost:8000';
+    }
+
+    try {
+        const response = await fetch(
+            `${baseUrl}/api/delete-url`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ shortUrl: formData.get('shortUrl') }),
+            }
+        );
+        if (!response.ok) {
+            throw new Error("Failed to delete URL");
+        }
+        const result = await response.json();
+        console.log(result);
+        refresh();
+        return result;
+
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
