@@ -40,7 +40,7 @@ export default async function URLList() {
                         {url && url.map((url, index) => (
                             <tr key={index} className={styles.tableRow}>
                                 <td className={styles.inputCell}><a href={url.inputUrl || ''} target="_blank" rel="noopener noreferrer">{url.inputUrl || ''}</a></td>
-                                <td><a href={`${baseUrl}/${url.shortUrl}` || ''} target="_blank" rel="noopener noreferrer">{url.shortUrl || ''}</a></td>
+                                <td className={styles.shortCell}><a href={`${baseUrl}/${url.shortUrl}` || ''} target="_blank" rel="noopener noreferrer">{url.shortUrl || ''}</a></td>
                                 <td className={styles.deleteCell}>
                                     <form action={deleteUrl}>
                                         <button className={styles.deleteButton} name="shortUrl" value={url.shortUrl || ''} type="submit"> - </button>

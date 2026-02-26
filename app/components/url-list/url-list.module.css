@@ -70,10 +70,20 @@
     border-radius: .2rem;
 }
 
-.tableRow>td:nth-child(even) {
+.shortCell {
     background-color: #d3830b;
     text-align: center;
     text-decoration: underline;
+}
+
+.shortCell:hover {
+    background-color: transparent;
+    color: #d3830b;
+    transition: .2s;
+}
+
+.tableBody .tableRow:nth-child(even)>.shortCell:hover {
+    background-color: #0f0f0f;
 }
 
 .deleteButton {
@@ -103,6 +113,11 @@
     font-size: .8rem;
     font-family: var(--font-duru-sans);
     letter-spacing: .001rem;
+}
+
+.inputCell>a:hover {
+    color: #d3830b;
+    transition: .2s;
 }
 
 .tableRow:nth-child(even)>.inputCell,
