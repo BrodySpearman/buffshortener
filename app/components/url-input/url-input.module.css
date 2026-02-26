@@ -20,8 +20,28 @@
     outline: none;
     font-size: 1.1rem;
     width: 70%;
-    padding: 0 .5rem;
+    height: 2rem;
+    padding: 0 .4rem;
 }
+
+.urlInput:hover {
+    background-color: #bdbaba00;
+    color: #d3830b;
+}
+
+.urlInput:focus {
+    color: #d3830b;
+    transition: .4s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition-delay: 9999s;
+    transition-delay: 9999s;
+}
+
 
 .urlInputButton {
     border: none;

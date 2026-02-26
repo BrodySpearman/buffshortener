@@ -1,8 +1,9 @@
 from api.index import app, create_db_client, close_db_client
 from pydantic import BaseModel
 from api.features.shortenUrl import generate_new_url
-from api.db.models.model import db_url, URLPost, URLListRecord, URLDelete
+from api.db.models.model import db_url, URLPost, URLListRecord, URLDelete, URLRedirect
 from datetime import datetime
+from fastapi.responses import RedirectResponse
 
 # Helpful developer tools
 # uvicorn api.index:app --reload ->
@@ -16,7 +17,7 @@ async def show_url_list():
         URL_LIST: object[]
         {
             "inputUrl": "https://www.youtube.com",
-            "shortUrl": "buff.ly/123456"
+            "shortUrl": "buff.st/123456"
         }
     """
     await create_db_client(app)
@@ -67,10 +68,28 @@ async def delete_url(url: URLDelete):
         Deletes a URL from the database.
         URLPost: object
         {
-            "shortUrl": "buff.ly/123456"
+            "shortUrl": "buff.st/123456"
         }
     """
     await create_db_client(app)
     await app.collection.delete_one({ "shortUrl": url.shortUrl })
     return {'message': 'URL deleted successfully'}
-    
+
+# Redirect from short URL to Long URL
+@app.get("/buff.st/{shortUrl}")
+async def redirect_url(shortUrl: str):
+    """
+        Redirects from short URL to Long URL.
+        URLRedirect: object
+        {
+            "shortUrl": "buff.st/123456",
+            "longUrl": "https://www.youtube.com"
+        }
+    """
+    await create_db_client(app)
+    url = await app.collection.find_one({ "shortUrl": f"buff.st/{shortUrl}" })
+    if url:
+        print("Redirecting to: ")
+        print(url["longUrl"])
+        return RedirectResponse(url["longUrl"])
+    return {'message': 'URL not found'}

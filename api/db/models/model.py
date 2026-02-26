@@ -15,3 +15,7 @@ class db_url(BaseModel):
     longUrl: str
     shortUrl: str
     createdAt: datetime
+
+class URLRedirect(BaseModel):
+    longUrl: str
+
