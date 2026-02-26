@@ -3,6 +3,10 @@
         {
             "source": "/api/(.*)",
             "destination": "/api/index"
+        },
+        {
+            "source": "/buff.st/(.*)",
+            "destination": "/api/index"
         }
     ]
 }
