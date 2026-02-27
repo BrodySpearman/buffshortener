@@ -56,7 +56,6 @@ export default async function URLList() {
 };
 
 async function fetchUrlList() {
-
     try {
         const response = await fetch(
             `${baseUrl}/api/show-url-list`
@@ -76,7 +75,6 @@ async function fetchUrlList() {
 
 async function deleteUrl(formData: FormData) {
     'use server';
-
     try {
         const response = await fetch(
             `${baseUrl}/api/delete-url`,

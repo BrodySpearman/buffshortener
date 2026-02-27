@@ -19,7 +19,6 @@ async def create_db_client(app):
     if(not uri):
         uri = os.environ.get("MONGODB_URI")
 
-    # Client Creation
     app.client = AsyncMongoClient(uri, server_api=ServerApi(version="1", deprecation_errors=True))
     app.database = app.client.get_database("url_storage")
     app.collection = app.database.get_collection("urls")

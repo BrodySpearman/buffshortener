@@ -1,14 +1,38 @@
-from api.index import app, create_db_client, close_db_client
+from api.index import app
 from pydantic import BaseModel
 from api.features.shortenUrl import generate_new_url
 from api.db.models.model import db_url, URLPost, URLListRecord, URLDelete, URLRedirect
 from datetime import datetime
+from fastapi import Response
 from fastapi.responses import RedirectResponse
+import uuid
 
 # Helpful developer tools
 # uvicorn api.index:app --reload ->
 # http://localhost:8000/api/docs -- API documentation
 # Database models are stored in api/db/models/model.py
+
+@app.get("/api/sessions/anonymous")
+async def create_anonymous_session(response: Response):
+    """
+        Creates a new anonymous session.
+        ANONYMOUS_SESSION: object
+        {
+            "sessionId": "123456"
+        }
+    """
+    session_id = str(uuid.uuid4())
+
+    response.set_cookie(
+        key="session_id",
+        value=session_id,
+        httponly=True,
+        samesite="lax",
+        max_age=60*60*24*7,
+        secure=False
+    )
+    print(f'New session created: {session_id}')
+    return {'sessionId': session_id}
 
 @app.get("/api/show-url-list")
 async def show_url_list():
@@ -20,13 +44,11 @@ async def show_url_list():
             "shortUrl": "buff.st/123456"
         }
     """
-    await create_db_client(app)
     url_list = []
     async for url in app.collection.find({}).limit(10): 
         url_list.append(URLListRecord(inputUrl=url['longUrl'], shortUrl=url['shortUrl']))
 
     print("URL List Received")
-
     return url_list
    
 
@@ -40,7 +62,6 @@ async def submit_url(url: URLPost):
         }
     """
     inputUrl = url.inputUrl
-    await create_db_client(app)
     
     new_db_url = db_url(
         longUrl=inputUrl,
@@ -71,7 +92,6 @@ async def delete_url(url: URLDelete):
             "shortUrl": "buff.st/123456"
         }
     """
-    await create_db_client(app)
     await app.collection.delete_one({ "shortUrl": url.shortUrl })
     return {'message': 'URL deleted successfully'}
 
@@ -86,7 +106,6 @@ async def redirect_url(shortUrl: str):
             "longUrl": "https://www.youtube.com"
         }
     """
-    await create_db_client(app)
     url = await app.collection.find_one({ "shortUrl": f"buff.st/{shortUrl}" })
     if url:
         print("Redirecting to: ")

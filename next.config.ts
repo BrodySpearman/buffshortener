@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   rewrites: async () => {
     return [
       {
+        source: "/api/session",
+        destination: "/api/session"
+      },
+      {
         source: "/api/:path*",
         destination:
           process.env.NODE_ENV === "development"
