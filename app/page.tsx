@@ -7,8 +7,9 @@ export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#222222] font-sans">
+    <div className="flex flex-col min-h-screen items-center bg-[#222222] font-sans">
       <Header />
+      <div className="divider"></div>
       <div className="mainContainer">
         <URLInput />
         <URLList />

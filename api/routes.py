@@ -65,7 +65,6 @@ async def create_anonymous_session(response: Response):
 """
 @app.get("/api/show-url-list")
 async def show_url_list(session_id: str = Depends(get_session)):
-
     url_list = []
     async for url in app.collection.find({"owner.session_id": session_id}).limit(10): 
         url_list.append(URLListRecord(inputUrl=url['longUrl'], shortUrl=url['shortUrl']))
@@ -83,6 +82,9 @@ async def show_url_list(session_id: str = Depends(get_session)):
 @app.post("/api/submit-url")
 async def submit_url(url: URLPost, session_id: str = Depends(get_session)):
     inputUrl = url.inputUrl
+
+    if inputUrl in app.collection.find_one({ "longUrl": inputUrl }):
+        return {'message': 'URL already exists'}
     
     new_db_url = db_url(
         longUrl=inputUrl,

@@ -1,4 +1,5 @@
 .urlInputContainer {
+    margin-top: 30vh;
     border: .12rem solid #d3830b;
     border-radius: .1rem;
     width: 50vw;
@@ -22,15 +23,19 @@
     width: 70%;
     height: 2rem;
     padding: 0 .4rem;
+    transition: .2s;
 }
 
 .urlInput:hover {
     background-color: #bdbaba00;
     color: #d3830b;
+    font-size: 1.15rem;
+    transition: .2s;
 }
 
 .urlInput:focus {
     color: #d3830b;
+    font-size: 1.1rem;
     transition: .4s;
 }
 
@@ -58,6 +63,7 @@ input:-webkit-autofill:active {
 .urlInputButton:hover {
     background-color: #d3830b;
     box-shadow: .05rem .05rem .05rem .05rem #d3830b;
+    font-size: 1.27rem;
     color: #ffffff;
     transition: .4s;
 }
