@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inconsolata, Duru_Sans } from "next/font/google";
 import "./globals.css";
+import SessionInit from "./components/session/session-init";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata",
@@ -23,11 +24,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <body
-        className={`${inconsolata.variable} ${duruSans.variable} antialiased`}
-      >
+      <body className={`${inconsolata.variable} ${duruSans.variable} antialiased`}>
+        <SessionInit />
         {children}
       </body>
     </html>

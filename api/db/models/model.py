@@ -15,6 +15,7 @@ class db_url(BaseModel):
     longUrl: str
     shortUrl: str
     createdAt: datetime
+    owner: dict
 
 class URLRedirect(BaseModel):
     longUrl: str
