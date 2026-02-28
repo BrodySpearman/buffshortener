@@ -1,7 +1,12 @@
-import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import styles from './url-input.module.css';
 import Form from 'next/form';
 import { refresh } from 'next/cache';
+
+let baseUrl = 'https://buffshortener.vercel.app';
+if (process.env.NODE_ENV === 'development') {
+    baseUrl = 'http://localhost:8000';
+}
 
 export default function URLInput() {
 
@@ -17,16 +22,16 @@ export default function URLInput() {
 
 async function submitVal(formData: FormData) {
     'use server';
-    let baseUrl = 'https://buffshortener.vercel.app';
-    if (process.env.NODE_ENV === 'development') {
-        baseUrl = 'http://localhost:8000';
-    }
+
+    const cookieStore = await cookies();
+    const sessionId = cookieStore.get('session_id')?.value;
 
     try {
         const response = await fetch(`${baseUrl}/api/submit-url`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Cookie': `session_id=${sessionId}`
             },
             body: JSON.stringify({ inputUrl: formData.get('inputUrl') }),
         });
