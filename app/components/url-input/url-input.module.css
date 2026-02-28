@@ -1,5 +1,6 @@
 .urlInputContainer {
     margin-top: 30vh;
+    margin-bottom: 3rem;
     border: .12rem solid #d3830b;
     border-radius: .1rem;
     width: 50vw;
@@ -63,7 +64,6 @@ input:-webkit-autofill:active {
 .urlInputButton:hover {
     background-color: #d3830b;
     box-shadow: .05rem .05rem .05rem .05rem #d3830b;
-    font-size: 1.27rem;
     color: #ffffff;
     transition: .4s;
 }

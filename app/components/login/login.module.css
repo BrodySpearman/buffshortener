@@ -1,0 +1,166 @@
+.loginBtnContainer {
+    position: fixed;
+    right: 0rem;
+    top: 4.5rem;
+}
+
+.loginBtn {
+    border: .1rem solid #d3830b;
+    border-right: transparent;
+    color: #d3830b;
+    background-color: #0f0f0f;
+    font-family: var(--font-inconsolata);
+    font-size: 1.2rem;
+    padding: .25 1rem;
+    border-radius: .2rem;
+    cursor: pointer;
+    border-radius: .6rem 0 0 .6rem;
+    transition: .2s;
+}
+
+.loginBtn:hover {
+    font-size: 1.3rem;
+    transition: .4s;
+}
+
+.loginBtn:active {
+    font-size: 1.2rem;
+}
+
+.modalContainer {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 44, 44, 0.37);
+}
+
+.modalBody {
+    position: relative;
+    width: 30%;
+    height: fit-content;
+    background-color: #0f0f0f;
+    border: .1rem solid #d3830b;
+}
+
+.closeModalBtn {
+    position: absolute;
+    top: 0;
+    right: .25rem;
+    padding: 0 .2rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #535353;
+    font-family: var(--font-inconsolata);
+    transform: scaleX(1.4);
+}
+
+.closeModalBtn:hover {
+    background-color: #fd2e2ec4;
+    color: #cacaca;
+    transition: .2s;
+}
+
+.modalFormBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+    text-align: center;
+}
+
+.modalFormTitle {
+    font-family: var(--font-inconsolata);
+    font-size: 1.8rem;
+    color: #d3830b;
+    text-decoration: underline;
+    text-underline-offset: .3rem;
+}
+
+.modalFormSubTitle {
+    font-family: var(--font-duru-sans);
+    font-size: 2rem;
+    color: #cacaca;
+    padding-top: 1rem;
+    padding-bottom: 0;
+}
+
+.modalFormText {
+    font-family: var(--font-inconsolata);
+    font-size: 1.25rem;
+    color: #cacacac5;
+}
+
+.signUpLink {
+    font-family: var(--font-inconsolata);
+    font-size: 1.1rem;
+    color: #d3830b;
+    text-decoration: underline;
+    text-underline-offset: .2rem;
+    margin-bottom: 1.5rem;
+}
+
+.signUpLink:hover {
+    text-decoration: double underline;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+}
+
+.formLabel {
+    font-family: var(--font-inconsolata);
+    font-size: 1rem;
+    text-align: left;
+    color: #cacaca;
+    width: 80%;
+    padding-left: .2rem;
+}
+
+.emailInput,
+.passwordInput {
+    width: 80%;
+    border: .1rem solid #d3830b;
+    background-color: #242424ab;
+    font-family: var(--font-inconsolata);
+    font-size: 1.25rem;
+    padding-left: .5rem;
+}
+
+.emailInput {
+    margin-bottom: 2rem;
+}
+
+.passwordInput {
+    margin-bottom: .2rem;
+}
+
+.forgotPassLink {
+    font-family: var(--font-inconsolata);
+    font-size: 1rem;
+    color: #d3830b;
+    text-decoration: underline;
+    text-underline-offset: .2rem;
+    margin-bottom: 3rem;
+}
+
+.loginSubmit {
+    background-color: #d3830b9a;
+    padding: .2rem 4rem;
+    font-family: var(--font-inconsolata);
+    font-size: 1.2rem;
+    margin-bottom: 1.3rem;
+    transition: .2s;
+}
+
+.loginSubmit:hover {
+    background-color: #d3830b;
+    transition: .2s;
+}
