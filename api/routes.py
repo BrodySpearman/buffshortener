@@ -82,10 +82,13 @@ async def show_url_list(session_id: str = Depends(get_session)):
 @app.post("/api/submit-url")
 async def submit_url(url: URLPost, session_id: str = Depends(get_session)):
     inputUrl = url.inputUrl
-
-    if inputUrl in app.collection.find_one({ "longUrl": inputUrl }):
-        return {'message': 'URL already exists'}
     
+    existing_url = await app.collection.find_one({ 
+        "longUrl": inputUrl,
+        "owner.session_id": session_id })
+    if existing_url:
+        return {'message': 'URL already exists'}
+
     new_db_url = db_url(
         longUrl=inputUrl,
         shortUrl=generate_new_url(inputUrl),

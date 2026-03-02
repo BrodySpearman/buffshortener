@@ -1,0 +1,77 @@
+.signupSubTitle {
+    font-size: 1.5rem;
+}
+
+.signupText {
+    font-family: var(--font-inconsolata);
+    font-size: 1.25rem;
+    color: #cacacac5;
+    max-width: 15rem;
+}
+
+.featureList {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 15rem;
+    padding-left: 2.1rem;
+    list-style-type: circle;
+    overflow: hidden;
+}
+
+.loginLink {
+    margin-bottom: .3rem;
+}
+
+.featureText {
+    font-size: 1.05rem;
+}
+
+li::marker {
+    color: #cacaca9d;
+    font-size: 1.1rem;
+}
+
+.listText {
+    font-family: var(--font-inconsolata);
+    font-size: 1.1rem;
+    color: #d3830bc9;
+    float: left;
+}
+
+.email,
+.password {
+    display: flex;
+    flex-direction: column;
+}
+
+.signupForm {
+    width: 78%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: .5rem .2rem;
+}
+
+.formInput {
+    border: .1rem solid #d3830bc9;
+    padding: .12rem .3rem;
+    font-family: var(--font-inconsolata);
+    font-size: 1.1rem;
+    background-color: #242424ab;
+
+}
+
+.signupSubmit {
+    background-color: #d3830b9a;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem 0rem;
+    font-family: var(--font-inconsolata);
+    font-size: 1.1rem;
+    transition: .2s;
+}
+
+.signupSubmit:hover {
+    background-color: #d3830bc9;
+    transition: .2s;
+}
