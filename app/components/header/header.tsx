@@ -1,4 +1,5 @@
 import styles from './header.module.css';
+import Login from '../login/login';
 
 export default function Header() {
     return (
@@ -11,6 +12,7 @@ export default function Header() {
                     <p className={styles.logoSubtitleText}>A simple, lightweight URL shortener</p>
                 </div>
             </div>
+            <Login />
         </header>
     );
 }

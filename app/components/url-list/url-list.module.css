@@ -28,7 +28,6 @@
 
 .tableBody {
     border: .1rem solid #d3830b;
-    border-bottom: none;
 }
 
 .tableHeader>tr>th {
@@ -53,8 +52,6 @@
 .tableRow>td {
     text-decoration: underline;
     max-width: 40vw;
-    overflow-x: auto;
-    white-space: nowrap;
 }
 
 .tableRow>td::-webkit-scrollbar {
@@ -102,12 +99,15 @@
 
 .deleteButton:hover {
     color: #ff0000;
+    transition: .2s
 }
 
 .inputCell {
     padding-left: .6rem;
     color: #cacaca;
     background-color: #0f0f0f;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .inputCell>a {

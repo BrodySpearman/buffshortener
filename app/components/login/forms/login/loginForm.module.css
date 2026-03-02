@@ -1,0 +1,94 @@
+.modalFormTitle {
+    font-family: var(--font-inconsolata);
+    font-size: 1.8rem;
+    color: #d3830b;
+    text-decoration: underline;
+    text-underline-offset: .3rem;
+}
+
+.modalFormSubTitle {
+    font-family: var(--font-duru-sans);
+    font-size: 2rem;
+    color: #cacaca;
+    padding-top: .6rem;
+    padding-bottom: 0;
+}
+
+.modalFormText {
+    font-family: var(--font-inconsolata);
+    font-size: 1.25rem;
+    color: #cacacac5;
+}
+
+.signUpLink {
+    font-family: var(--font-inconsolata);
+    font-size: 1.1rem;
+    color: #d3830b;
+    text-decoration: underline;
+    text-underline-offset: .2rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: double underline;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+}
+
+.formLabel {
+    font-family: var(--font-inconsolata);
+    font-size: 1rem;
+    text-align: left;
+    color: #cacaca;
+    width: 80%;
+    padding-left: .2rem;
+    text-wrap: nowrap;
+}
+
+.emailInput,
+.passwordInput {
+    width: 80%;
+    border: .1rem solid #d3830bc9;
+    background-color: #242424ab;
+    font-family: var(--font-inconsolata);
+    font-size: 1.1rem;
+    padding: .12rem .3rem;
+}
+
+.emailInput {
+    margin-bottom: 1rem;
+}
+
+.passwordInput {
+    margin-bottom: .2rem;
+}
+
+.forgotPassLink {
+    font-family: var(--font-inconsolata);
+    font-size: 1rem;
+    color: #d3830b;
+    text-decoration: underline;
+    text-underline-offset: .2rem;
+    margin-bottom: 1.4rem;
+}
+
+.loginSubmit {
+    background-color: #d3830b9a;
+    width: 80%;
+    height: 2.5rem;
+    font-family: var(--font-inconsolata);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    transition: .2s;
+}
+
+.loginSubmit:hover {
+    background-color: #d3830b;
+    transition: .2s;
+}

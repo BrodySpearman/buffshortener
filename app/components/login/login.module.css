@@ -1,0 +1,74 @@
+.loginBtnContainer {
+    position: fixed;
+    right: 0rem;
+    top: 4.5rem;
+}
+
+.loginBtn {
+    border: .1rem solid #d3830b;
+    border-right: transparent;
+    color: #d3830b;
+    background-color: #0f0f0f;
+    font-family: var(--font-inconsolata);
+    font-size: 1.2rem;
+    padding: .25 1rem;
+    border-radius: .2rem;
+    cursor: pointer;
+    border-radius: .6rem 0 0 .6rem;
+    transition: .2s;
+}
+
+.loginBtn:hover {
+    font-size: 1.3rem;
+    transition: .4s;
+}
+
+.loginBtn:active {
+    font-size: 1.2rem;
+}
+
+.modalContainer {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 44, 44, 0.37);
+}
+
+.modalBody {
+    position: relative;
+    min-width: 30%;
+    height: fit-content;
+    background-color: #0f0f0f;
+    border: .1rem solid #d3830b;
+}
+
+.closeModalBtn {
+    position: absolute;
+    top: 0;
+    right: .25rem;
+    padding: 0 .2rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #535353;
+    font-family: var(--font-inconsolata);
+    transform: scaleX(1.4);
+}
+
+.closeModalBtn:hover {
+    background-color: #fd2e2ec4;
+    color: #cacaca;
+    transition: .2s;
+}
+
+.modalFormBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+    text-align: center;
+}
