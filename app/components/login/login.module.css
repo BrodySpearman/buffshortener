@@ -47,20 +47,30 @@
     border: .1rem solid #d3830b;
 }
 
+.modalBody> :not(input) {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    cursor: default;
+}
+
 .closeModalBtn {
     position: absolute;
     top: 0;
-    right: .25rem;
-    padding: 0 .2rem;
+    right: .22rem;
+    padding: 0 .24rem;
     font-size: 1.4rem;
     cursor: pointer;
     color: #535353;
     font-family: var(--font-inconsolata);
     transform: scaleX(1.4);
+    border-bottom-left-radius: 5px;
 }
 
 .closeModalBtn:hover {
-    background-color: #fd2e2ec4;
+    background-color: #d3830b;
     color: #cacaca;
     transition: .2s;
 }
