@@ -1,5 +1,9 @@
 .signupSubTitle {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    max-width: 90%;
+    font-family: var(--font-inconsolata);
+    letter-spacing: -.05rem;
+    color: #cacaca;
 }
 
 .signupText {

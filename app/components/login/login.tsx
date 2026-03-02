@@ -27,13 +27,13 @@ export default function Login() {
     return (
         <div>
             <div className={styles.loginBtnContainer}>
-                <button className={styles.loginBtn} onClick={openModal}>Login or sign up now!</button>
+                <button className={`no-highlight ${styles.loginBtn}`} onClick={openModal}>Login or sign up now!</button>
             </div>
 
             {isModal &&
                 <div className={styles.modalContainer}>
                     <div className={styles.modalBody}>
-                        <button className={styles.closeModalBtn} onClick={closeModal}>X</button>
+                        <button className={`${styles.closeModalBtn}`} onClick={closeModal}>X</button>
                         <div className={styles.modalFormBody}>
                             {formState === 'login' ? (
                                 <LoginForm onSignupClick={switchFormToSignup} />

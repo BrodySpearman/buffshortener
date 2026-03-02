@@ -1,20 +1,27 @@
 import Header from './components/header/header';
-import URLInput from './components/url-input/url-input'
-import URLList from './components/url-list/url-list'
-import Footer from './components/footer/footer'
+import URLInput from './components/url-input/url-input';
+import URLList from './components/url-list/url-list';
+import Footer from './components/footer/footer';
+import ParticleBackground from './components/background/particle-background';
 
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
+
   return (
-    <div className="flex flex-col min-h-screen items-center bg-[#222222] font-sans">
-      <Header />
-      <div className="divider"></div>
-      <div className="mainContainer">
-        <URLInput />
-        <URLList />
+    <main className="relative min-h-screen w-full isolate">
+      {/* Background layer */}
+      <ParticleBackground />
+      {/* Foreground layer*/}
+      <div className="relative z-10 flex flex-col min-h-screen items-center font-sans">
+        <Header />
+        <div className="divider"></div>
+        <div className="mainContainer">
+          <URLInput />
+          <URLList />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </main>
   );
 }

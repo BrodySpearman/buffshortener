@@ -10,14 +10,14 @@ export default function signupForm({ onLoginClick }: SignupFormProps) {
     return (
         <>
             <h1 className={`${modalStyles.modalFormTitle}`}>User Signup</h1>
-            <h2 className={`${modalStyles.modalFormSubTitle} ${styles.signupSubTitle}`}>Welcome to Buff Shortener.</h2>
+            <h2 className={`${modalStyles.modalFormSubTitle} ${styles.signupSubTitle}`}>Big. Url. Functional. Formatting.</h2>
             <p className={styles.signupText}>Sign up now to access:</p>
             <ul className={styles.featureList}>
                 <li><p className={styles.listText}>Custom URLs</p></li>
                 <li><p className={styles.listText}>URL history</p></li>
                 <li><p className={styles.listText}>URL statistics</p></li>
             </ul>
-            <p className={`${styles.signupText} ${styles.featureText}`}>With more features being worked on every day.</p>
+            <p className={`${styles.signupText} ${styles.featureText}`}>With more features being worked on every week.</p>
             <a className={`${modalStyles.signUpLink} ${styles.loginLink}`} onClick={onLoginClick}>Login instead?</a>
             <Form className={styles.signupForm} action="">
                 <div className={styles.email}>

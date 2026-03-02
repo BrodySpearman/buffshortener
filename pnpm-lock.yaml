@@ -14,6 +14,9 @@ importers:
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      particlesjs:
+        specifier: ^2.2.3
+        version: 2.2.3
       react:
         specifier: 19.2.3
         version: 19.2.3
@@ -1648,6 +1651,9 @@ packages:
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
+
+  particlesjs@2.2.3:
+    resolution: {integrity: sha512-f0rL80Agqdsrnv/uhlLewv+LMdiXHu9MYPzMv0ZLPM06nLx3zmAXMH882fxqO6Uzb91csli8WlWaYd2XPN0d/Q==}
 
   path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -3679,6 +3685,8 @@ snapshots:
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
+
+  particlesjs@2.2.3: {}
 
   path-exists@4.0.0: {}
 
