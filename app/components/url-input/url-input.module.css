@@ -1,6 +1,5 @@
 .urlInputContainer {
     margin-top: 30vh;
-    margin-bottom: 3rem;
     border: .12rem solid #d3830b;
     border-radius: .1rem;
     width: 50vw;
@@ -67,4 +66,28 @@ input:-webkit-autofill:active {
     box-shadow: .05rem .05rem .05rem .05rem #d3830b;
     color: #ffffff;
     transition: .4s;
+}
+
+.error {
+    font-family: var(--font-inconsolata);
+    font-size: 1rem;
+    color: #d35252;
+    width: 50vw;
+    text-align: center;
+    padding-left: .4rem;
+    border: .1rem solid #d35252;
+    border-top: none;
+    padding-top: .1rem;
+    animation: slide-in-from-top .2s ease-in-out;
+    transition: .2s;
+}
+
+@keyframes slide-in-from-top {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
 }

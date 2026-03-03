@@ -11,13 +11,9 @@ export default async function URLList() {
 
     const url: { inputUrl: string | null, shortUrl: string | null }[] = await fetchUrlList();
 
-    if (!url) {
+    if (url.length === 0) {
         return (
-            <div className={styles.urlListOuter}>
-                <h1 className={styles.urlListTitle}>URL List</h1>
-                <div className={styles.urlListInner}>
-                </div>
-            </div>
+            null
         );
     }
 

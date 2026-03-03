@@ -79,3 +79,7 @@ li::marker {
     background-color: #d3830bc9;
     transition: .2s;
 }
+
+.signupErrorFormat {
+    width: 100%;
+}

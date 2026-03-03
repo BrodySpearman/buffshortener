@@ -61,10 +61,6 @@ a:hover {
     padding: .12rem .3rem;
 }
 
-.emailInput {
-    margin-bottom: 1rem;
-}
-
 .passwordInput {
     margin-bottom: .2rem;
 }
@@ -91,4 +87,13 @@ a:hover {
 .loginSubmit:hover {
     background-color: #d3830b;
     transition: .2s;
+}
+
+.error {
+    font-family: var(--font-inconsolata);
+    font-size: .9rem;
+    color: #d35252;
+    width: 80%;
+    text-align: left;
+    padding-left: .2rem;
 }

@@ -69,7 +69,6 @@ async def show_url_list(session_id: str = Depends(get_session)):
     async for url in app.collection.find({"owner.session_id": session_id}).limit(10): 
         url_list.append(URLListRecord(inputUrl=url['longUrl'], shortUrl=url['shortUrl']))
 
-    print("URL List Received")
     return url_list
 
 """
