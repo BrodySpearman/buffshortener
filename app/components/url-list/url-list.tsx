@@ -11,19 +11,15 @@ export default async function URLList() {
 
     const url: { inputUrl: string | null, shortUrl: string | null }[] = await fetchUrlList();
 
-    if (!url) {
+    if (url.length === 0) {
         return (
-            <div className={styles.urlListOuter}>
-                <h1 className={styles.urlListTitle}>URL List</h1>
-                <div className={styles.urlListInner}>
-                </div>
-            </div>
+            null
         );
     }
 
     return (
         <div className={styles.urlListOuter}>
-            <h1 className={styles.urlListTitle}>URL List</h1>
+            <h1 className={`no-highlight ${styles.urlListTitle}`}>URL List</h1>
             <div className={styles.urlListInner}>
                 <table className={styles.urlTable}>
                     <colgroup>
@@ -31,7 +27,7 @@ export default async function URLList() {
                         <col style={{ width: '20%' }} />
                         <col style={{ width: '5%' }} />
                     </colgroup>
-                    <thead className={styles.tableHeader}>
+                    <thead className={`no-highlight ${styles.tableHeader}`}>
                         <tr>
                             <th>Input URL</th>
                             <th>Short URL</th>
