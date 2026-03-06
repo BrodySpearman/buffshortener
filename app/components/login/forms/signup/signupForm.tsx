@@ -1,4 +1,3 @@
-import Form from "next/form";
 import styles from './signupForm.module.css';
 import modalStyles from '../login/loginForm.module.css';
 import { useForm } from "react-hook-form";
@@ -20,10 +19,12 @@ interface SignupFormProps {
     onLoginClick: () => void;
 }
 
-export default function signupForm({ onLoginClick }: SignupFormProps) {
+export default function SignupForm({ onLoginClick }: SignupFormProps) {
     const { register, handleSubmit, formState: { errors } } = useForm<signupData>({
         resolver: zodResolver(signupSchema),
     });
+
+    console.log('hello')
 
     const onSubmit = (data: signupData) => {
         console.log(data);

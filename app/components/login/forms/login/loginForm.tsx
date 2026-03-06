@@ -1,4 +1,3 @@
-import Form from "next/form";
 import styles from './loginForm.module.css';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +12,7 @@ type loginData = z.infer<typeof loginSchema>;
 
 interface LoginFormProps { onSignupClick: () => void; }
 
-export default function loginForm({ onSignupClick }: LoginFormProps) {
+export default function LoginForm({ onSignupClick }: LoginFormProps) {
     const { register, handleSubmit, formState: { errors } } = useForm<loginData>({
         resolver: zodResolver(loginSchema),
     });

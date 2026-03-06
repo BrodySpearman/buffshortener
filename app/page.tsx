@@ -3,10 +3,12 @@ import URLInput from './components/url-input/url-input';
 import URLList from './components/url-list/url-list';
 import Footer from './components/footer/footer';
 import ParticleBackground from './components/background/particle-background';
+import { fetchUrlList } from './components/url-list/actions';
 
 export const dynamic = 'force-dynamic';
 
-export default function Home() {
+export default async function Home() {
+  const urlList = await fetchUrlList();
 
   return (
     <main className="relative min-h-screen w-full isolate">
@@ -18,7 +20,7 @@ export default function Home() {
         <div className="divider"></div>
         <div className="mainContainer">
           <URLInput />
-          <URLList />
+          <URLList urlList={urlList} />
         </div>
         <Footer />
       </div>

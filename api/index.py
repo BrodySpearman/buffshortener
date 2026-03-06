@@ -4,6 +4,9 @@ import os
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from beanie import init_beanie
+from api.auth.models.userModels import User
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -22,6 +25,12 @@ async def create_db_client(app):
     app.client = AsyncMongoClient(uri, server_api=ServerApi(version="1", deprecation_errors=True))
     app.database = app.client.get_database("url_storage")
     app.collection = app.database.get_collection("urls")
+
+    ### User database adapter connection ###
+    await init_beanie(
+        database=app.database,
+        document_models=[User]
+    )
 
     try:
         print("Successfully connected to MongoDB!")

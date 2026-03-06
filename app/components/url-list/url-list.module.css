@@ -129,3 +129,14 @@
 .deleteCell {
     background-color: #0f0f0f;
 }
+
+.inputWait {
+    font-size: 1.5rem;
+    font-family: var(--font-inconsolata);
+    color: #d3830b;
+    padding: .5rem;
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    text-decoration: underline;
+    text-underline-offset: .4rem;
+}

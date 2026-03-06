@@ -80,7 +80,7 @@ async def show_url_list(session_id: str = Depends(get_session)):
 """
 @app.post("/api/submit-url")
 async def submit_url(url: URLPost, session_id: str = Depends(get_session)):
-    inputUrl = url.inputUrl
+    inputUrl = str(url.inputUrl)
     
     existing_url = await app.collection.find_one({ 
         "longUrl": inputUrl,
@@ -99,7 +99,11 @@ async def submit_url(url: URLPost, session_id: str = Depends(get_session)):
         }
     )
 
-    await app.collection.insert_one(new_db_url.model_dump())
+    try:
+        await app.collection.insert_one(new_db_url.model_dump())
+
+    except ValidationError as e:
+        return {'message': 'Invalid URL'}
 
     # User limit check
     countCursor = await app.collection.count_documents({"owner.session_id": session_id})
