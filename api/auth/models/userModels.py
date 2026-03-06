@@ -6,4 +6,4 @@ class User(BeanieBaseUser, Document):
     pass
 
 async def get_user_db():
-    yield BeanieBaseUser(User)
+    yield BeanieUserDatabase(User)

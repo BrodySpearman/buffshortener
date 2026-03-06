@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 
-// Proxy function for session management
+// Proxy function for anonymous session management
 export async function GET(request: NextRequest) {
     const existingSession = request.cookies.get('session_id');
 

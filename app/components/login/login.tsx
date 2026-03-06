@@ -3,25 +3,28 @@ import styles from './login.module.css';
 import { useState } from 'react';
 import LoginForm from './forms/login/loginForm';
 import SignupForm from './forms/signup/signupForm';
+import VerifyForm from './forms/verify/signupVerify/verify';
 
 export default function Login() {
     const [isModal, setModalOpen] = useState(false);
     const [formState, setFormState] = useState('login');
 
     const switchFormToSignup = () => {
-        setFormState('signup')
+        setFormState('signup');
     }
-
     const switchFormToLogin = () => {
-        setFormState('login')
+        setFormState('login');
+    }
+    const switchFormToVerify = () => {
+        setFormState('verify');
     }
 
     const openModal = () => {
         setModalOpen(true);
     }
-
     const closeModal = () => {
         setModalOpen(false);
+        switchFormToLogin();
     }
 
     return (
@@ -37,8 +40,10 @@ export default function Login() {
                         <div className={styles.modalFormBody}>
                             {formState === 'login' ? (
                                 <LoginForm onSignupClick={switchFormToSignup} />
-                            ) : (
-                                <SignupForm onLoginClick={switchFormToLogin} />
+                            ) : formState === 'signup' ? (
+                                <SignupForm onLoginClick={switchFormToLogin} onVerifyClick={switchFormToVerify} />
+                            ) : formState === 'verify' && (
+                                <VerifyForm />
                             )}
                         </div>
 

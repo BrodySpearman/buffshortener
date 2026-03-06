@@ -1,5 +1,5 @@
 'use server'
-import { refresh } from 'next/cache';
+import { refresh, revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 let baseUrl = 'https://buffshortener.vercel.app';
@@ -53,7 +53,7 @@ export async function deleteUrl(formData: FormData) {
         }
         const result = await response.json();
         console.log(result);
-        refresh();
+        revalidatePath("/")
         return result;
 
     } catch (error) {
