@@ -7,9 +7,6 @@ from fastapi import FastAPI
 from beanie import init_beanie
 
 from api.auth.models.userModels import User
-from api.auth.auth_config import auth_backend, fastapi_users
-from api.auth.schemas import UserRead, UserCreate
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -47,16 +44,12 @@ app = FastAPI(docs_url="/api/docs", lifespan=lifespan)
 print('Initialized FastAPI')
 
 ### Auth routers ###
-app.include_router(
-    fastapi_users.get_auth_router(auth_backend),
-    prefix="/api/auth/jwt",
-    tags=["auth"],
-)
+from api.auth.routes import auth_router
 
 app.include_router(
-    fastapi_users.get_register_router(UserRead, UserCreate),
+    auth_router,
     prefix="/api/auth",
-    tags=["auth"],
+    tags=["auth"]
 )
 
 import api.routes

@@ -4,14 +4,17 @@ from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, FastAPIUsers
 from api.auth.models.userModels import User, get_user_db
 from dotenv import load_dotenv
+from fastapi_mail import FastMail, MessageSchema, MessageType
 import os
 
+dev_mode = True
 
 load_dotenv()
 SECRET = os.getenv("VERIFICATION_KEY")
 
 if (not SECRET):
     SECRET = os.environ.get("VERIFICATION_KEY")
+    False
 
 class UserManager(BaseUserManager[User, PydanticObjectId]):
     verification_token_secret = SECRET
@@ -34,17 +37,32 @@ class UserManager(BaseUserManager[User, PydanticObjectId]):
             )
             print("Migration complete.")
 
-        
+        await self.request_verify(user, request)
 
-    async def on_after_forgot_password(
-        self, user: User, token: str, request: Request | None=None
-    ):
+    async def on_after_forgot_password(self, user: User, token: str, request: Request | None=None):
         print(f"User {user.id} has forgot their password. Reset token: {token}")
 
-    async def on_after_request_verify(
-        self, user: User, token: str, request: Request | None=None
-    ):
+    async def on_after_request_verify(self, user: User, token: str, request: Request | None=None):
         print(f"Verification requested for user {user.id}. Verification token: {token}")
+
+        verification_url = ""
+        if dev_mode:
+            verification_url = (f"http://localhost:3000/verify?token={token}")
+        else:
+            verification_url = (f"https://buffshortener.vercel.app/verify?token={token}")
+
+        message = MessageSchema(
+            subject="Buffshorter.vercel.app Verification",
+            recipients=[user.email],
+            body=f"Thank you for signing up, click the link to verify your email: {verification_url}",
+        )
+
+       
+        
+
+        fm = FastMail(conf)
+        await fm.send_message(message)
+        
 
 async def get_user_manager(user_db=Depends(get_user_db)):
     yield UserManager(user_db)
