@@ -29,10 +29,11 @@ export const signupServerSubmit = async (data: signupData) => {
     });
 
     if (response.ok) {
-        return response;
+        return await response.json();
     } else {
         const errorMsg = await response.json();
         console.error("Failed to sign up", errorMsg);
+        return { error: errorMsg };
     }
 }
 

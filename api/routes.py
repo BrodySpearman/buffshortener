@@ -8,6 +8,7 @@ from fastapi.responses import RedirectResponse
 import uuid
 from api.features.Session.getSession import get_session
 
+
 # Helpful developer tools
 # uvicorn api.index:app --reload ->
 # http://localhost:8000/api/docs -- API documentation

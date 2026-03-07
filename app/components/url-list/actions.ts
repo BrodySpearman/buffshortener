@@ -1,10 +1,20 @@
 'use server'
 import { refresh, revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 let baseUrl = 'https://buffshortener.vercel.app';
 if (process.env.NODE_ENV === 'development') {
     baseUrl = 'http://localhost:8000';
+}
+
+async function getHeaders() {
+    const cookieStore = await cookies();
+    const sessionId = cookieStore.get('session_id')?.value;
+
+    const headers: Record<string, string> = {};
+    if (sessionId) headers['Cookie'] = `session_id=${sessionId}`;
+
+    return headers;
 }
 
 export async function fetchUrlList() {
@@ -13,6 +23,7 @@ export async function fetchUrlList() {
         const sessionId = cookieStore.get('session_id')?.value;
 
         const response = await fetch(`${baseUrl}/api/show-url-list`, {
+            method: 'GET',
             headers: {
                 'Cookie': `session_id=${sessionId}`
             }

@@ -5,6 +5,7 @@ from fastapi_users import BaseUserManager, FastAPIUsers
 from api.auth.models.userModels import User, get_user_db
 from dotenv import load_dotenv
 from fastapi_mail import FastMail, MessageSchema, MessageType
+from api.auth.features.email.email_config import conf
 import os
 
 dev_mode = True
@@ -43,7 +44,7 @@ class UserManager(BaseUserManager[User, PydanticObjectId]):
         print(f"User {user.id} has forgot their password. Reset token: {token}")
 
     async def on_after_request_verify(self, user: User, token: str, request: Request | None=None):
-        print(f"Verification requested for user {user.id}. Verification token: {token}")
+        print(f"Verification requested for user {user.email}. Verification token: {token}")
 
         verification_url = ""
         if dev_mode:
@@ -55,10 +56,8 @@ class UserManager(BaseUserManager[User, PydanticObjectId]):
             subject="Buffshorter.vercel.app Verification",
             recipients=[user.email],
             body=f"Thank you for signing up, click the link to verify your email: {verification_url}",
+            subtype=MessageType.plain
         )
-
-       
-        
 
         fm = FastMail(conf)
         await fm.send_message(message)
