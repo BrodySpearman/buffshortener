@@ -2,6 +2,7 @@ import styles from './loginForm.module.css';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
+import { submitLogin } from './loginSubmit';
 
 const loginSchema = z.object({
     email: z.email("Invalid email address"),
@@ -18,7 +19,8 @@ export default function LoginForm({ onSignupClick }: LoginFormProps) {
     });
 
     const onSubmit = (data: loginData) => {
-        return null;
+        submitLogin(data.email, data.password);
+        console.log('user logged in.')
     };
 
     return (

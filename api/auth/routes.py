@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from api.auth.auth_config import auth_backend, fastapi_users
-from api.auth.schemas import UserRead, UserCreate
+from api.auth.schemas import UserRead, UserCreate, UserUpdate
 
 auth_router = APIRouter()
 
@@ -16,4 +16,10 @@ auth_router.include_router(
 auth_router.include_router(
     fastapi_users.get_verify_router(UserRead),
     prefix="/verify"
+)
+
+auth_router.include_router(
+    fastapi_users.get_users_router(UserRead, UserCreate),
+    prefix="/users",
+    tags=["users"]
 )

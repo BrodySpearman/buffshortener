@@ -1,7 +1,11 @@
 import styles from './header.module.css';
 import Login from '../login/login';
 
-export default function Header() {
+interface HeaderProps {
+    user: any;
+}
+
+export default function Header({ user }: HeaderProps) {
     return (
         <header className={`no-highlight ${styles.header}`}>
             <div className={styles.headerContent}>
@@ -12,7 +16,7 @@ export default function Header() {
                     <p className={styles.logoSubtitleText}>A simple, lightweight URL shortener</p>
                 </div>
             </div>
-            <Login />
+            <Login user={user} />
         </header>
     );
 }

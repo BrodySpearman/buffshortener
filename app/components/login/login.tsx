@@ -6,12 +6,16 @@ import LoginForm from './forms/login/loginForm';
 import SignupForm from './forms/signup/signupForm';
 import VerifyForm from './forms/verify/signupVerify/verify';
 
-export default function Login() {
+interface LoginProps {
+    user: any;
+}
+
+export default function Login({ user }: LoginProps) {
     const [isModal, setModalOpen] = useState(false);
     const [formState, setFormState] = useState('login');
 
     // url param method to redirect to login after user verification
-    // Probably not the way of doing it but it works.
+    // Probably not the next.js way of doing it but it works.
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -43,6 +47,10 @@ export default function Login() {
     const closeModal = () => {
         setModalOpen(false);
         setFormState('login');
+    }
+
+    if (user) {
+        return null;
     }
 
     return (

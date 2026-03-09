@@ -1,6 +1,8 @@
 import modalStyles from '../../login/loginForm.module.css';
 import styles from './verify.module.css';
 
+// Server actions for authentication with signup verification are inside app/auth/verification
+
 export default function Verify() {
     return (
         <>
