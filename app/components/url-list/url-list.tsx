@@ -14,7 +14,7 @@ interface URLListProps {
 export default function URLList({ urlList }: URLListProps) {
     return (
         <div className={styles.urlListOuter}>
-            {urlList?.length === 0 && (<h1 className={`no-highlight ${styles.urlListTitle}`}>No URLs found</h1>)}
+            {(!urlList || urlList.length === 0) && (<h1 className={`no-highlight ${styles.urlListTitle}`}>No URLs found</h1>)}
             {urlList?.length > 0 && (
                 <>
                     <h1 className={`no-highlight ${styles.urlListTitle}`}>URL List</h1>

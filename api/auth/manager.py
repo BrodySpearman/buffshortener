@@ -21,6 +21,12 @@ class UserManager(BaseUserManager[User, PydanticObjectId]):
     verification_token_secret = SECRET
     reset_password_token_secret = SECRET
 
+    # Needed custom function for getting custom types for PydanticObjectID
+    def parse_id(self, val):
+        if isinstance(val, PydanticObjectId):
+            return val
+        return PydanticObjectId(val)
+
     async def on_after_register(self, user: User, request: Request | None=None):
         print(f"User {user.id} has registered.")
         print(f'User Email: {user.email}')
@@ -48,9 +54,9 @@ class UserManager(BaseUserManager[User, PydanticObjectId]):
 
         verification_url = ""
         if dev_mode:
-            verification_url = (f"http://localhost:3000/verify?token={token}")
+            verification_url = (f"http://localhost:3000/auth/verification?token={token}")
         else:
-            verification_url = (f"https://buffshortener.vercel.app/verify?token={token}")
+            verification_url = (f"https://buffshortener.vercel.app/auth/verification?token={token}")
 
         message = MessageSchema(
             subject="Buffshorter.vercel.app Verification",

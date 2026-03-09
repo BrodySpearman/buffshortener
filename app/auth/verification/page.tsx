@@ -17,8 +17,6 @@ export default function VerifyPage() {
         verifyUserToken(token).then((res) => {
             if (res?.success) {
                 setStatus("Successfully verified! Redirecting to login...");
-                // Redirects them back to the home page!
-                // You might trigger your login modal to open automatically using query params
                 setTimeout(() => router.push('/?showLogin=true'), 2000);
             } else {
                 setStatus("Verification failed. Link may be expired.");

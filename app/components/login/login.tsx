@@ -1,6 +1,7 @@
 'use client';
 import styles from './login.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import LoginForm from './forms/login/loginForm';
 import SignupForm from './forms/signup/signupForm';
 import VerifyForm from './forms/verify/signupVerify/verify';
@@ -8,6 +9,23 @@ import VerifyForm from './forms/verify/signupVerify/verify';
 export default function Login() {
     const [isModal, setModalOpen] = useState(false);
     const [formState, setFormState] = useState('login');
+
+    // url param method to redirect to login after user verification
+    // Probably not the way of doing it but it works.
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    useEffect(() => {
+        const showLoginParam = searchParams.get('showLogin');
+        const paramsObject = new URLSearchParams(searchParams);
+
+        if (showLoginParam == 'true') {
+            setModalOpen(true);
+            setFormState('login');
+            paramsObject.delete('showLogin');
+            router.replace(`/?${paramsObject.toString()}`);
+        }
+    }, [searchParams]);
 
     const switchFormToSignup = () => {
         setFormState('signup');
@@ -24,7 +42,7 @@ export default function Login() {
     }
     const closeModal = () => {
         setModalOpen(false);
-        switchFormToLogin();
+        setFormState('login');
     }
 
     return (

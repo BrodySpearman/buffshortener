@@ -5,7 +5,7 @@ export async function verifyUserToken(token: string) {
         ? 'http://localhost:8000'
         : 'https://buffshortener.vercel.app';
 
-    const response = await fetch(`${baseUrl}/api/auth/verify`, {
+    const response = await fetch(`${baseUrl}/api/auth/verify/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token })
