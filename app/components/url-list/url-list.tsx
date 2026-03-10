@@ -1,6 +1,7 @@
 'use client'
 import styles from './url-list.module.css';
-import { fetchUrlList, deleteUrl } from './actions';
+import { deleteUrl } from './actions';
+import { useState, useEffect } from 'react';
 
 let baseUrl = 'https://buffshortener.vercel.app';
 if (process.env.NODE_ENV === 'development') {
@@ -12,6 +13,12 @@ interface URLListProps {
 }
 
 export default function URLList({ urlList }: URLListProps) {
+    const [urlCount, setUrlCount] = useState(urlList?.length || 0);
+
+    useEffect(() => {
+        setUrlCount(urlList?.length || 0);
+    }, [urlList]);
+
     return (
         <div className={styles.urlListOuter}>
             {(!urlList || urlList.length === 0) && (<h1 className={`no-highlight ${styles.urlListTitle}`}>No URLs found</h1>)}
@@ -25,6 +32,7 @@ export default function URLList({ urlList }: URLListProps) {
                                 <col style={{ width: '20%' }} />
                                 <col style={{ width: '5%' }} />
                             </colgroup>
+                            <caption className={`no-highlight ${styles.urlCount}`}>{urlCount}/10</caption>
                             <thead className={`no-highlight ${styles.tableHeader}`}>
                                 <tr>
                                     <th>Input URL</th>

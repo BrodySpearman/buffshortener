@@ -7,27 +7,20 @@ if (process.env.NODE_ENV === 'development') {
     baseUrl = 'http://localhost:8000';
 }
 
-async function getHeaders() {
-    const cookieStore = await cookies();
-    const sessionId = cookieStore.get('session_id')?.value;
-
-    const headers: Record<string, string> = {};
-    if (sessionId) headers['Cookie'] = `session_id=${sessionId}`;
-
-    return headers;
-}
-
 export async function fetchUrlList() {
     try {
         const cookieStore = await cookies();
         const sessionId = cookieStore.get('session_id')?.value;
+        const authToken = cookieStore.get('auth_token')?.value;
 
-        const response = await fetch(`${baseUrl}/api/show-url-list`, {
-            method: 'GET',
-            headers: {
-                'Cookie': `session_id=${sessionId}`
-            }
-        });
+        const headers: Record<string, string> = {
+            'Cookie': `session_id=${sessionId}`
+        }
+        if (authToken) {
+            headers['Authorization'] = `Bearer ${authToken}`
+        }
+
+        const response = await fetch(`${baseUrl}/api/show-url-list`, { headers });
         if (!response.ok) {
             throw new Error("Failed to fetch URL list");
         }

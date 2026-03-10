@@ -27,6 +27,7 @@ export async function submitLogin(email: string, password: string) {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
+            path: '/',
             maxAge: 60 * 60 * 24
         })
         return { success: true, token: data.access_token };
