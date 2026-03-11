@@ -2,10 +2,9 @@
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 
-let baseUrl = 'https://buffshortener.vercel.app';
-if (process.env.NODE_ENV === 'development') {
-    baseUrl = 'http://localhost:8000';
-}
+const baseUrl = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'
+    : '';
 
 export async function submitVal(formData: FormData) {
 

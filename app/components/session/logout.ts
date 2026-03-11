@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 export async function logout() {
     const baseUrl = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
-        : 'https://buffshortener.vercel.app';
+        : '';
 
     const cookieStore = await cookies();
     const token = cookieStore.get('auth_token')?.value;

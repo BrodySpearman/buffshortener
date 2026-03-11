@@ -2,10 +2,9 @@
 import { refresh, revalidatePath } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 
-let baseUrl = 'https://buffshortener.vercel.app';
-if (process.env.NODE_ENV === 'development') {
-    baseUrl = 'http://localhost:8000';
-}
+const baseUrl = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'
+    : '';
 
 export async function fetchUrlList() {
     try {

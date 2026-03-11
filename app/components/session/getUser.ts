@@ -10,7 +10,7 @@ export async function getUser() {
         if (!token) return null;
         const baseUrl = process.env.NODE_ENV === 'development'
             ? 'http://localhost:8000'
-            : 'https://buffshortener.vercel.app';
+            : '';
 
         const response = await fetch(`${baseUrl}/api/auth/users/me`, {
             headers: {

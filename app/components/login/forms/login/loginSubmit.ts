@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 export async function submitLogin(email: string, password: string) {
     const baseUrl = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
-        : 'https://buffshortener.vercel.app';
+        : '';
     // must use URLSearchParams to create form data
     const formData = new URLSearchParams();
     formData.append('username', email);

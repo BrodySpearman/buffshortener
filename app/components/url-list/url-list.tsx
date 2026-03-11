@@ -3,10 +3,9 @@ import styles from './url-list.module.css';
 import { deleteUrl } from './actions';
 import { useState, useEffect } from 'react';
 
-let baseUrl = 'https://buffshortener.vercel.app';
-if (process.env.NODE_ENV === 'development') {
-    baseUrl = 'http://localhost:8000';
-}
+const baseUrl = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'
+    : '';
 
 interface URLListProps {
     urlList: { inputUrl: string | null, shortUrl: string | null }[];

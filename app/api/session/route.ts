@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
     const baseUrl = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
-        : 'https://buffshortener.vercel.app';
+        : '';
 
     // Found inside root api folder.
     const fastapiRes = await fetch(`${baseUrl}/api/sessions/anonymous`);
