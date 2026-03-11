@@ -1,9 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { verifyUserToken } from './actions';
 
-export default function VerifyPage() {
+function VerifyContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const token = searchParams.get('token');
@@ -23,9 +23,18 @@ export default function VerifyPage() {
             }
         });
     }, [token, router]);
+
     return (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10rem' }}>
             <h1>{status}</h1>
         </div>
+    );
+}
+
+export default function VerifyPage() {
+    return (
+        <Suspense fallback={<div className='flex mt-[10rem]'><h1>Loading...</h1></div>}>
+            <VerifyContent />
+        </Suspense>
     );
 }
