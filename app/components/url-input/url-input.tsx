@@ -4,7 +4,7 @@ import Form from 'next/form';
 import { z } from 'zod';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { submitVal } from './form/formsubmit';
+import { submitVal } from '../../actions/forms/urlSubmit';
 import { useState } from 'react';
 
 

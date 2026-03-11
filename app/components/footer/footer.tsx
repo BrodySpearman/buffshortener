@@ -1,5 +1,5 @@
 import styles from './footer.module.css';
-import { logout } from '../session/logout';
+import { logout } from '../../actions/session/logout';
 
 interface FooterProps {
     user: any;

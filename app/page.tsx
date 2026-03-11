@@ -4,7 +4,7 @@ import URLList from './components/url-list/url-list';
 import Footer from './components/footer/footer';
 import ParticleBackground from './components/background/particle-background';
 import { fetchUrlList } from './components/url-list/actions';
-import { getUser } from './components/session/getUser';
+import { getUser } from './actions/session/getUser';
 
 export const dynamic = 'force-dynamic';
 

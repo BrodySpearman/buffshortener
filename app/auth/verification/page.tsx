@@ -1,7 +1,7 @@
 'use client'
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { verifyUserToken } from './actions';
+import { verifyUserToken } from '../../actions/verification/verifyAction';
 
 function VerifyContent() {
     const searchParams = useSearchParams();
