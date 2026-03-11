@@ -3,7 +3,7 @@ import modalStyles from '../login/loginForm.module.css';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
-import { signupServerSubmit } from './signupSubmit';
+import { signupServerSubmit } from '../../../../actions/forms/signupSubmit';
 
 const signupSchema = z.object({
     email: z.email("Invalid email address"),

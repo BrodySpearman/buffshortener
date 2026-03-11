@@ -2,7 +2,7 @@ import styles from './loginForm.module.css';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
-import { submitLogin } from './loginSubmit';
+import { submitLogin } from '../../../../actions/forms/loginSubmit';
 import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
