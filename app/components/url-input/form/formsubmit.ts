@@ -2,9 +2,7 @@
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 
-const baseUrl = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8000'
-    : '';
+const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
 
 export async function submitVal(formData: FormData) {
 

@@ -2,9 +2,7 @@
 import { refresh, revalidatePath } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 
-const baseUrl = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8000'
-    : '';
+const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
 
 export async function fetchUrlList() {
     try {

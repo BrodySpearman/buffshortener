@@ -1,9 +1,7 @@
 'use server';
 
 export async function verifyUserToken(token: string) {
-    const baseUrl = process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8000'
-        : '';
+    const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
 
     const response = await fetch(`${baseUrl}/api/auth/verify/verify`, {
         method: 'POST',

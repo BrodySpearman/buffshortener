@@ -9,9 +9,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ sessionId: existingSession.value });
     }
 
-    const baseUrl = process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8000'
-        : '';
+    const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
 
     // Found inside root api folder.
     const fastapiRes = await fetch(`${baseUrl}/api/sessions/anonymous`);

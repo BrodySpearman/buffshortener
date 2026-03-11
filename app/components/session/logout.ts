@@ -3,9 +3,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
 export async function logout() {
-    const baseUrl = process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8000'
-        : '';
+    const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
 
     const cookieStore = await cookies();
     const token = cookieStore.get('auth_token')?.value;

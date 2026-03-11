@@ -8,9 +8,7 @@ export async function getUser() {
         console.log('auth_token exists:', !!token)
 
         if (!token) return null;
-        const baseUrl = process.env.NODE_ENV === 'development'
-            ? 'http://localhost:8000'
-            : '';
+        const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
 
         const response = await fetch(`${baseUrl}/api/auth/users/me`, {
             headers: {
