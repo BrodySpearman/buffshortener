@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export default function SessionInit() {
     useEffect(() => {
-        fetch('/api/session')
+        fetch('/auth/api/session')
     }, []);
 
     return null;
