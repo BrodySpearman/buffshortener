@@ -2,17 +2,27 @@ from api.index import app
 from pydantic import BaseModel
 from api.features.shortenUrl import generate_new_url
 from api.db.models.model import db_url, URLPost, URLListRecord, URLDelete, URLRedirect
+from api.auth.models.userModels import User
+from api.auth.auth_config import current_active_user, current_optional_user
 from datetime import datetime
-from fastapi import Response, Depends
+from fastapi import Response, Depends, Cookie
 from fastapi.responses import RedirectResponse
 import uuid
 from api.features.Session.getSession import get_session
+from typing import Optional
 
 # Helpful developer tools
 # uvicorn api.index:app --reload ->
 # http://localhost:8000/api/docs -- API documentation
 # Database models are stored in api/db/models/model.py
 
+# Small helper function for user checking.
+def get_owner_query(session_id: str, user: Optional[User] = None) -> dict:
+    if user:
+        return {"owner.user_id": str(user.id)}
+    else:
+        return{"owner.session_id": session_id}
+        
 ### Routes ###
 
 """
@@ -64,9 +74,14 @@ async def create_anonymous_session(response: Response):
     }
 """
 @app.get("/api/show-url-list")
-async def show_url_list(session_id: str = Depends(get_session)):
+async def show_url_list(
+    session_id: str = Depends(get_session),
+    user: Optional[User] = Depends(current_optional_user)
+):
+    query = get_owner_query(session_id, user)
     url_list = []
-    async for url in app.collection.find({"owner.session_id": session_id}).sort({"createdAt": -1}).limit(10): 
+
+    async for url in app.collection.find(query).sort({"createdAt": -1}).limit(10): 
         url_list.append(URLListRecord(inputUrl=url['longUrl'], shortUrl=url['shortUrl']))
 
     return url_list
@@ -79,12 +94,17 @@ async def show_url_list(session_id: str = Depends(get_session)):
     }
 """
 @app.post("/api/submit-url")
-async def submit_url(url: URLPost, session_id: str = Depends(get_session)):
-    inputUrl = url.inputUrl
+async def submit_url(
+    url: URLPost, 
+    session_id: str = Depends(get_session), 
+    user: Optional[User] = Depends(current_optional_user)
+):
+    inputUrl = str(url.inputUrl)
     
     existing_url = await app.collection.find_one({ 
         "longUrl": inputUrl,
-        "owner.session_id": session_id })
+        **get_owner_query(session_id, user)
+         })
 
     if existing_url:
         return {'message': 'URL already exists for user'}
@@ -95,16 +115,20 @@ async def submit_url(url: URLPost, session_id: str = Depends(get_session)):
         createdAt=datetime.now(),
         owner={
             "session_id": session_id,
-            "user_id": None
+            "user_id": str(user.id) if user else None
         }
     )
 
-    await app.collection.insert_one(new_db_url.model_dump())
+    try:
+        await app.collection.insert_one(new_db_url.model_dump())
+
+    except ValidationError as e:
+        return {'message': 'Invalid URL'}
 
     # User limit check
-    countCursor = await app.collection.count_documents({"owner.session_id": session_id})
+    countCursor = await app.collection.count_documents(get_owner_query(session_id, user))
     if countCursor > 10:
-        await app.collection.delete_one({"owner.session_id": session_id})
+        await app.collection.delete_one(get_owner_query(session_id, user))
 
     print("New Entry: (")
     print(f"Short URL: {new_db_url.shortUrl}")
@@ -123,7 +147,13 @@ async def submit_url(url: URLPost, session_id: str = Depends(get_session)):
     }
 """
 @app.delete("/api/delete-url")
-async def delete_url(url: URLDelete):
-    await app.collection.delete_one({ "shortUrl": url.shortUrl })
+async def delete_url(
+    url: URLDelete, 
+    session_id: str = Depends(get_session), 
+    user: Optional[User] = Depends(current_optional_user)
+):
+    query = get_owner_query(session_id, user)
+    await app.collection.delete_one({ "shortUrl": url.shortUrl, **query })
     print(f'Deleted url: {url.shortUrl}')
+    print(f'ID: {query.values}')
     return {'message': 'URL deleted successfully'}

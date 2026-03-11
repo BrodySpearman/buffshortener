@@ -1,111 +1,61 @@
+'use client'
 import styles from './url-list.module.css';
-import { refresh } from 'next/cache';
-import { cookies } from 'next/headers';
+import { deleteUrl } from './actions';
+import { useState, useEffect } from 'react';
 
-let baseUrl = 'https://buffshortener.vercel.app';
-if (process.env.NODE_ENV === 'development') {
-    baseUrl = 'http://localhost:8000';
+const baseUrl = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'
+    : '';
+
+interface URLListProps {
+    urlList: { inputUrl: string | null, shortUrl: string | null }[];
 }
 
-export default async function URLList() {
+export default function URLList({ urlList }: URLListProps) {
+    const [urlCount, setUrlCount] = useState(urlList?.length || 0);
 
-    const url: { inputUrl: string | null, shortUrl: string | null }[] = await fetchUrlList();
-
-    if (url.length === 0) {
-        return (
-            null
-        );
-    }
+    useEffect(() => {
+        setUrlCount(urlList?.length || 0);
+    }, [urlList]);
 
     return (
         <div className={styles.urlListOuter}>
-            <h1 className={`no-highlight ${styles.urlListTitle}`}>URL List</h1>
-            <div className={styles.urlListInner}>
-                <table className={styles.urlTable}>
-                    <colgroup>
-                        <col style={{ width: '75%' }} />
-                        <col style={{ width: '20%' }} />
-                        <col style={{ width: '5%' }} />
-                    </colgroup>
-                    <thead className={`no-highlight ${styles.tableHeader}`}>
-                        <tr>
-                            <th>Input URL</th>
-                            <th>Short URL</th>
-                        </tr>
-                    </thead>
-                    <tbody className={styles.tableBody}>
-                        {url && url.map((url, index) => (
-                            <tr key={index} className={styles.tableRow}>
-                                <td className={styles.inputCell}><a href={url.inputUrl || ''} target="_blank" rel="noopener noreferrer">{url.inputUrl || ''}</a></td>
-                                <td className={styles.shortCell}><a href={`${baseUrl}/${url.shortUrl}` || ''} target="_blank" rel="noopener noreferrer">{url.shortUrl || ''}</a></td>
-                                <td className={styles.deleteCell}>
-                                    <form action={deleteUrl}>
-                                        <button className={styles.deleteButton} name="shortUrl" value={url.shortUrl || ''} type="submit"> - </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            {(!urlList || urlList.length === 0) && (<h1 className={`no-highlight ${styles.urlListTitle}`}>No URLs found</h1>)}
+            {urlList?.length > 0 && (
+                <>
+                    <h1 className={`no-highlight ${styles.urlListTitle}`}>URL List</h1>
+                    <div className={styles.urlListInner}>
+                        <table className={styles.urlTable}>
+                            <colgroup>
+                                <col style={{ width: '75%' }} />
+                                <col style={{ width: '20%' }} />
+                                <col style={{ width: '5%' }} />
+                            </colgroup>
+                            <caption className={`no-highlight ${styles.urlCount}`}>{urlCount}/10</caption>
+                            <thead className={`no-highlight ${styles.tableHeader}`}>
+                                <tr>
+                                    <th>Input URL</th>
+                                    <th>Short URL</th>
+                                </tr>
+                            </thead>
+                            <tbody className={styles.tableBody}>
+                                {urlList && urlList.map((url, index) => (
+                                    <tr key={index} className={styles.tableRow}>
+                                        <td className={styles.inputCell}><a href={url.inputUrl || ''} target="_blank" rel="noopener noreferrer">{url.inputUrl || ''}</a></td>
+                                        <td className={styles.shortCell}><a href={`${baseUrl}/${url.shortUrl}` || ''} target="_blank" rel="noopener noreferrer">{url.shortUrl || ''}</a></td>
+                                        <td className={styles.deleteCell}>
+                                            <form action={deleteUrl}>
+                                                <button className={styles.deleteButton} name="shortUrl" value={url.shortUrl || ''} type="submit"> - </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
-
-async function fetchUrlList() {
-    try {
-        const cookieStore = await cookies();
-        const sessionId = cookieStore.get('session_id')?.value;
-
-        const response = await fetch(`${baseUrl}/api/show-url-list`, {
-            headers: {
-                'Cookie': `session_id=${sessionId}`
-            }
-        });
-        if (!response.ok) {
-            throw new Error("Failed to fetch URL list");
-        }
-
-        const urlList = await response.json();
-        console.log(urlList);
-
-        return urlList;
-
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
-
-async function deleteUrl(formData: FormData) {
-    'use server';
-
-    try {
-        const cookieStore = await cookies();
-        const sessionId = cookieStore.get('session_id')?.value;
-
-        const response = await fetch(
-            `${baseUrl}/api/delete-url`,
-            {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Cookie': `session_id=${sessionId}`
-                },
-                body: JSON.stringify({ shortUrl: formData.get('shortUrl') }),
-            }
-        );
-        if (!response.ok) {
-            throw new Error("Failed to delete URL");
-        }
-        const result = await response.json();
-        console.log(result);
-        refresh();
-        return result;
-
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
 

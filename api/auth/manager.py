@@ -1,0 +1,72 @@
+import uuid
+from beanie import PydanticObjectId
+from fastapi import Depends, Request
+from fastapi_users import BaseUserManager, FastAPIUsers
+from api.auth.models.userModels import User, get_user_db
+from dotenv import load_dotenv
+from fastapi_mail import FastMail, MessageSchema, MessageType
+from api.auth.features.email.email_config import conf
+import os
+
+dev_mode = True
+
+load_dotenv()
+SECRET = os.getenv("VERIFICATION_KEY")
+
+if (not SECRET):
+    SECRET = os.environ.get("VERIFICATION_KEY")
+    False
+
+class UserManager(BaseUserManager[User, PydanticObjectId]):
+    verification_token_secret = SECRET
+    reset_password_token_secret = SECRET
+
+    # Needed custom function for getting custom types for PydanticObjectID
+    def parse_id(self, val):
+        if isinstance(val, PydanticObjectId):
+            return val
+        return PydanticObjectId(val)
+
+    async def on_after_register(self, user: User, request: Request | None=None):
+        print(f"User {user.id} has registered.")
+        print(f'User Email: {user.email}')
+        
+        session_id = None
+        if request: session_id = request.cookies.get("session_id")
+        from api.index import app
+
+        # Existing URL migration
+        if session_id:
+            print(f"Migrating existing URL data from anonymous session {session_id} to user {user.id}...")
+            await app.collection.update_many(
+                {"owner.session_id": session_id},
+                {"$set": {"owner.user_id": str(user.id), "owner.session_id": None}}
+            )
+            print("Migration complete.")
+
+        await self.request_verify(user, request)
+
+    async def on_after_forgot_password(self, user: User, token: str, request: Request | None=None):
+        print(f"User {user.id} has forgot their password. Reset token: {token}")
+
+    async def on_after_request_verify(self, user: User, token: str, request: Request | None=None):
+        print(f"Verification requested for user {user.email}. Verification token: {token}")
+
+        verification_url = ""
+        if dev_mode:
+            verification_url = (f"http://localhost:3000/auth/verification?token={token}")
+        else:
+            verification_url = (f"https://buffshortener.vercel.app/auth/verification?token={token}")
+
+        message = MessageSchema(
+            subject="Buffshorter.vercel.app Verification",
+            recipients=[user.email],
+            body=f"Thank you for signing up, click the link to verify your email: {verification_url}",
+            subtype=MessageType.plain
+        )
+
+        fm = FastMail(conf)
+        await fm.send_message(message)
+
+async def get_user_manager(user_db=Depends(get_user_db)):
+    yield UserManager(user_db)

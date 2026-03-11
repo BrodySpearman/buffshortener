@@ -4,6 +4,9 @@ import os
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from beanie import init_beanie
+
+from api.auth.models.userModels import User
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -15,7 +18,6 @@ async def create_db_client(app):
 
     load_dotenv()
     uri = os.getenv("MONGODB_URI")
-
     if(not uri):
         uri = os.environ.get("MONGODB_URI")
 
@@ -23,9 +25,14 @@ async def create_db_client(app):
     app.database = app.client.get_database("url_storage")
     app.collection = app.database.get_collection("urls")
 
+    ### User database adapter connection ###
+    await init_beanie(
+        database=app.database,
+        document_models=[User]
+    )
+
     try:
         print("Successfully connected to MongoDB!")
-
     except Exception as e:
         print(e)
 
@@ -35,5 +42,15 @@ async def close_db_client(app):
 
 app = FastAPI(docs_url="/api/docs", lifespan=lifespan)
 print('Initialized FastAPI')
+
+### Auth routers ###
+from api.auth.routes import auth_router
+
+app.include_router(
+    auth_router,
+    prefix="/api/auth",
+    tags=["auth"]
+)
+
 import api.routes
 

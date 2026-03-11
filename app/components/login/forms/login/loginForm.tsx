@@ -1,8 +1,9 @@
-import Form from "next/form";
 import styles from './loginForm.module.css';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
+import { submitLogin } from './loginSubmit';
+import { useRouter } from 'next/navigation';
 
 const loginSchema = z.object({
     email: z.email("Invalid email address"),
@@ -13,13 +14,21 @@ type loginData = z.infer<typeof loginSchema>;
 
 interface LoginFormProps { onSignupClick: () => void; }
 
-export default function loginForm({ onSignupClick }: LoginFormProps) {
+export default function LoginForm({ onSignupClick }: LoginFormProps) {
+    const router = useRouter();
+
     const { register, handleSubmit, formState: { errors } } = useForm<loginData>({
         resolver: zodResolver(loginSchema),
     });
 
-    const onSubmit = (data: loginData) => {
-        return null;
+    const onSubmit = async (data: loginData) => {
+        const result = await submitLogin(data.email, data.password);
+        if (result.success) {
+            console.log(`user logged in (${data.email})`)
+            router.refresh();
+        } else {
+            console.error('login failed:', result.error)
+        }
     };
 
     return (

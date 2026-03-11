@@ -27,7 +27,7 @@ export default function URLInput() {
 
     return (
         <>
-            <div className={styles.urlInputContainer}>
+            <div className={`no-highlight ${styles.urlInputContainer}`}>
                 <form className={styles.urlInputForm} onSubmit={handleSubmit(onSubmit)}>
                     <input className={styles.urlInput} placeholder="Enter or paste link to anything..." {...register("inputUrl")}
                         value={inputVal}

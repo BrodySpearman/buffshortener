@@ -61,6 +61,10 @@ a:hover {
     padding: .12rem .3rem;
 }
 
+.emailInput {
+    margin-bottom: .2rem;
+}
+
 .passwordInput {
     margin-bottom: .2rem;
 }

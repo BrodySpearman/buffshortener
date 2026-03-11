@@ -1,27 +1,56 @@
 'use client';
 import styles from './login.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import LoginForm from './forms/login/loginForm';
 import SignupForm from './forms/signup/signupForm';
+import VerifyForm from './forms/verify/signupVerify/verify';
 
-export default function Login() {
+interface LoginProps {
+    user: any;
+}
+
+export default function Login({ user }: LoginProps) {
     const [isModal, setModalOpen] = useState(false);
     const [formState, setFormState] = useState('login');
 
-    const switchFormToSignup = () => {
-        setFormState('signup')
-    }
+    // url param method to redirect to login after user verification
+    // Probably not the next.js way of doing it but it works.
+    const searchParams = useSearchParams();
+    const router = useRouter();
 
+    useEffect(() => {
+        const showLoginParam = searchParams.get('showLogin');
+        const paramsObject = new URLSearchParams(searchParams);
+
+        if (showLoginParam == 'true') {
+            setModalOpen(true);
+            setFormState('login');
+            paramsObject.delete('showLogin');
+            router.replace(`/?${paramsObject.toString()}`);
+        }
+    }, [searchParams]);
+
+    const switchFormToSignup = () => {
+        setFormState('signup');
+    }
     const switchFormToLogin = () => {
-        setFormState('login')
+        setFormState('login');
+    }
+    const switchFormToVerify = () => {
+        setFormState('verify');
     }
 
     const openModal = () => {
         setModalOpen(true);
     }
-
     const closeModal = () => {
         setModalOpen(false);
+        setFormState('login');
+    }
+
+    if (user) {
+        return null;
     }
 
     return (
@@ -37,8 +66,10 @@ export default function Login() {
                         <div className={styles.modalFormBody}>
                             {formState === 'login' ? (
                                 <LoginForm onSignupClick={switchFormToSignup} />
-                            ) : (
-                                <SignupForm onLoginClick={switchFormToLogin} />
+                            ) : formState === 'signup' ? (
+                                <SignupForm onLoginClick={switchFormToLogin} onVerifyClick={switchFormToVerify} />
+                            ) : formState === 'verify' && (
+                                <VerifyForm />
                             )}
                         </div>
 

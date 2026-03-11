@@ -1,16 +1,17 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl, ValidationError
 from datetime import datetime
 
 class URLPost(BaseModel):
-    inputUrl: str
+    inputUrl: HttpUrl
 
 class URLDelete(BaseModel):
     shortUrl: str
 
 class URLListRecord(BaseModel):
-    inputUrl: str
+    inputUrl: HttpUrl
     shortUrl: str
 
+# Every non-basic type needs string conversion when being inserted into the database
 class db_url(BaseModel):
     longUrl: str
     shortUrl: str
@@ -19,4 +20,3 @@ class db_url(BaseModel):
 
 class URLRedirect(BaseModel):
     longUrl: str
-

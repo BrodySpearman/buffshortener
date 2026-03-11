@@ -1,9 +1,9 @@
-import Form from "next/form";
 import styles from './signupForm.module.css';
 import modalStyles from '../login/loginForm.module.css';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from 'zod';
+import { signupServerSubmit } from './signupSubmit';
 
 const signupSchema = z.object({
     email: z.email("Invalid email address"),
@@ -18,15 +18,17 @@ type signupData = z.infer<typeof signupSchema>;
 
 interface SignupFormProps {
     onLoginClick: () => void;
+    onVerifyClick: () => void;
 }
 
-export default function signupForm({ onLoginClick }: SignupFormProps) {
+export default function SignupForm({ onLoginClick, onVerifyClick }: SignupFormProps) {
     const { register, handleSubmit, formState: { errors } } = useForm<signupData>({
         resolver: zodResolver(signupSchema),
     });
 
     const onSubmit = (data: signupData) => {
-        console.log(data);
+        signupServerSubmit(data)
+        onVerifyClick();
     };
 
     return (

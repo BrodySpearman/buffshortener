@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 
-// Proxy function for session management
+// Proxy function for anonymous session management
 export async function GET(request: NextRequest) {
     const existingSession = request.cookies.get('session_id');
 
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
     const baseUrl = process.env.NODE_ENV === 'development'
         ? 'http://localhost:8000'
-        : 'https://buffshortener.vercel.app';
+        : '';
 
     // Found inside root api folder.
     const fastapiRes = await fetch(`${baseUrl}/api/sessions/anonymous`);
@@ -25,3 +25,4 @@ export async function GET(request: NextRequest) {
     }
     return response;
 }
+
