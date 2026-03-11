@@ -3,9 +3,8 @@ import { cookies } from 'next/headers';
 
 // login information fetching
 export async function submitLogin(email: string, password: string) {
-    const baseUrl = process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8000'
-        : '';
+    const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
+
     // must use URLSearchParams to create form data
     const formData = new URLSearchParams();
     formData.append('username', email);
