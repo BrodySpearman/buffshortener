@@ -1,6 +1,6 @@
 ![Logo](https://i.postimg.cc/sXb33Ry2/image-2026-03-11-143829091.png)
 
-[Check it out here!](https://buff-shortener.vercel.app/)
+[Check it out here!](https://buffshortener.vercel.app/)
 
 # B.U.F.F. (The Big URL Functional Formatter)
 

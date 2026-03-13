@@ -1,5 +1,5 @@
 import styles from './header.module.css';
-import Login from '../login/login';
+import Login from '../loginModal/login';
 
 interface HeaderProps {
     user: any;

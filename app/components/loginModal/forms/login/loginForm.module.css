@@ -51,6 +51,10 @@ a:hover {
     text-wrap: nowrap;
 }
 
+input:focus {
+    outline: none;
+}
+
 .emailInput,
 .passwordInput {
     width: 80%;
