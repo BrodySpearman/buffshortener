@@ -35,13 +35,13 @@ export default function SignupForm({ onLoginClick, onVerifyClick }: SignupFormPr
         <>
             <h1 className={`${modalStyles.modalFormTitle}`}>User Signup</h1>
             <h2 className={`${modalStyles.modalFormSubTitle} ${styles.signupSubTitle}`}>Big. Url. Functional. Formatting.</h2>
-            <p className={styles.signupText}>Sign up now to access:</p>
+            <p className={`${styles.signupText} ${styles.featureText}`}>Future features will be available to members, such as:</p>
             <ul className={styles.featureList}>
-                <li><p className={styles.listText}>Custom URLs</p></li>
-                <li><p className={styles.listText}>URL history</p></li>
-                <li><p className={styles.listText}>URL statistics</p></li>
+                <li><p className={styles.listText}>Custom URL endpoints</p></li>
+                <li><p className={styles.listText}>Increased URL cap</p></li>
+                <li><p className={styles.listText}>URL usage analytics</p></li>
             </ul>
-            <p className={`${styles.signupText} ${styles.featureText}`}>With more features being worked on every week.</p>
+            <p className={`${styles.signupText} ${styles.featureText}`}>With much more to come.</p>
             <a className={`${modalStyles.signUpLink} ${styles.loginLink}`} onClick={onLoginClick}>Login instead?</a>
             <form className={styles.signupForm} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.email}>

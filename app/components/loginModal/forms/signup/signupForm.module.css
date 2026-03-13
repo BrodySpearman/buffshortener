@@ -10,15 +10,17 @@
     font-family: var(--font-inconsolata);
     font-size: 1.25rem;
     color: #cacacac5;
-    max-width: 15rem;
+    max-width: 18rem;
 }
 
 .featureList {
     display: flex;
     flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
     float: left;
     width: 15rem;
-    padding-left: 2.1rem;
     list-style-type: circle;
     overflow: hidden;
 }
@@ -32,13 +34,12 @@
 }
 
 li::marker {
-    color: #cacaca9d;
-    font-size: 1.1rem;
+    color: #cacaca00;
 }
 
 .listText {
     font-family: var(--font-inconsolata);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: #d3830bc9;
     float: left;
 }
@@ -52,7 +53,7 @@ li::marker {
 .signupForm {
     width: 78%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(80%, 1fr));
     gap: .5rem .2rem;
 }
 
@@ -63,6 +64,10 @@ li::marker {
     font-size: 1.1rem;
     background-color: #242424ab;
 
+}
+
+input:focus {
+    outline: none;
 }
 
 .signupSubmit {
