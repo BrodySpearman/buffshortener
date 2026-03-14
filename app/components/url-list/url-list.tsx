@@ -3,9 +3,7 @@ import styles from './url-list.module.css';
 import { deleteUrl } from './actions';
 import { useState, useEffect } from 'react';
 
-const baseUrl = process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8000'
-    : '';
+const baseUrl = String(process.env.NEXT_PUBLIC_BASE_URL);
 
 interface URLListProps {
     urlList: { inputUrl: string | null, shortUrl: string | null }[];
@@ -27,9 +25,9 @@ export default function URLList({ urlList }: URLListProps) {
                     <div className={styles.urlListInner}>
                         <table className={styles.urlTable}>
                             <colgroup>
-                                <col style={{ width: '75%' }} />
-                                <col style={{ width: '20%' }} />
-                                <col style={{ width: '5%' }} />
+                                <col className={styles.urlCol1} />
+                                <col className={styles.urlCol2} />
+                                <col className={styles.urlCol3} />
                             </colgroup>
                             <caption className={`no-highlight ${styles.urlCount}`}>{urlCount}/10</caption>
                             <thead className={`no-highlight ${styles.tableHeader}`}>

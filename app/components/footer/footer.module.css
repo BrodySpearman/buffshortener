@@ -33,3 +33,16 @@
 .logoff:hover {
     text-decoration: double underline;
 }
+
+@media screen and (max-width: 850px) {
+    .creatorSig {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: transparent;
+    }
+
+    .accountInfo {
+        padding-right: 1rem;
+    }
+}

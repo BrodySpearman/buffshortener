@@ -32,7 +32,7 @@ export default function URLInput() {
                     <input className={styles.urlInput} placeholder="Enter or paste link to anything..." {...register("inputUrl")}
                         value={inputVal}
                         onChange={(e) => setInputVal(e.target.value)} />
-                    <button className={styles.urlInputButton} type="submit">Shorten URL</button>
+                    <button className={styles.urlInputButton} type="submit">Shorten</button>
                 </form>
             </div>
             {errors.inputUrl && <p className={styles.error}>{errors.inputUrl.message}</p>}
