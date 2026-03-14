@@ -7,12 +7,12 @@
 .loginBtn {
     border: .1rem solid #d3830b;
     border-right: transparent;
+    width: 100%;
     color: #d3830b;
     background-color: #0f0f0f;
     font-family: var(--font-inconsolata);
     font-size: 1.2rem;
     padding: .25 1rem;
-    border-radius: .2rem;
     cursor: pointer;
     border-radius: .6rem 0 0 .6rem;
     transition: .2s;
@@ -25,6 +25,28 @@
 
 .loginBtn:active {
     font-size: 1.2rem;
+}
+
+@media screen and (max-width: 850px) {
+    .loginBtnContainer {
+        position: relative;
+        border-right: transparent;
+        border-left: transparent;
+        width: 100vw;
+        top: 0;
+        left: 0;
+    }
+
+    .loginBtn {
+        border-radius: 0;
+        padding-top: .2rem;
+        padding-bottom: .2rem;
+        font-size: 1.15rem;
+        border-top: .12rem solid #d3830b;
+        border-bottom: .12rem solid #d3830b;
+        border-left: .1rem solid #d3830b00;
+        border-right: .1rem solid #d3830b00;
+    }
 }
 
 .modalContainer {

@@ -2,7 +2,7 @@
     margin-top: 30vh;
     border: .12rem solid #d3830b;
     border-radius: .1rem;
-    width: 50vw;
+    width: 70%;
     font-family: var(--font-inconsolata);
     background-color: #0f0f0f;
 }
@@ -47,7 +47,6 @@ input:-webkit-autofill:active {
     transition-delay: 9999s;
 }
 
-
 .urlInputButton {
     border: none;
     outline: none;
@@ -90,4 +89,27 @@ input:-webkit-autofill:active {
     to {
         transform: translateY(0%);
     }
+}
+
+@media screen and (max-width: 850px) {
+    .urlInputContainer {
+        margin-top: 26vh;
+        width: 100%;
+        border-left: .1rem solid #d3830b00;
+        border-right: .1rem solid #d3830b00;
+    }
+
+    .urlInput {
+        width: 100%;
+        border-bottom: .1rem solid #d3830b;
+        font-size: 1.25rem;
+        text-align: center;
+        height: 2.4rem;
+    }
+
+    .urlInputButton {
+        width: 100%;
+        border-left: .1rem solid #d3830b00;
+    }
+
 }
