@@ -84,12 +84,12 @@
     top: 0;
     right: .22rem;
     padding: 0 .24rem;
+    padding-left: .28rem;
     font-size: 1.4rem;
     cursor: pointer;
     color: #535353;
     font-family: var(--font-inconsolata);
     transform: scaleX(1.4);
-    border-bottom-left-radius: 5px;
 }
 
 .closeModalBtn:hover {
